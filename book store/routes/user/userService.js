@@ -50,14 +50,15 @@ module.exports = {
   checkUser: async (userInfo) => {
     try {
       console.log(userInfo);
-      const { id, password } = userInfo;
+      const { id, pw } = userInfo;
       const conn = await pool.getConnection();
       const query = "select * from User where user_id = ?;";
 
       const [result] = await conn.query(query, [id]);
       conn.release();
       const { user_password } = result[0];
-      if (user_password === password) {
+
+      if (user_password === pw) {
         return result[0];
       } else {
         return 0;

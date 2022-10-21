@@ -20,7 +20,6 @@ module.exports = {
         book_num,
         book_name,
         book_stock,
-
         book_price,
       ]);
       conn.release();

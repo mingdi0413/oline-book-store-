@@ -15,33 +15,26 @@ router.post("/sign-up", async function (req, res) {
     res.redirect("main/sign-up");
   }
 });
-
 //로그인
-router.post("/login", async function (req, res) {
+router.post("/login", async (req, res) => {
   const id = req.body.id;
-
   const query = "select * from user where user_id='" + id + "';";
   console.log(query);
-  router.post("/login", async (req, res) => {
-    try {
-      const result = await UserService.checkUser(req.body);
-      console.log(result);
-      if (result === 0) {
-        console.log("존재하지 않는 계정입니다.");
-        res.redirect("/login");
-      } else {
-        console.log("로그인 성공하셨습니다.");
-        res.cookie("user", id, {
-          expires: new Date(Date.now + 900000),
-          httpOnly: true,
-        });
-        res.render("/store");
-      }
-    } catch (error) {
-      console.log("비밀번호 틀림");
+
+  try {
+    const result = await userservice.checkUser(req.body);
+    console.log(result);
+    if (result === 0) {
+      console.log("존재하지 않는 계정입니다.");
       res.redirect("/login");
+    } else {
+      console.log("로그인 성공하셨습니다.");
+      res.render("main/store");
     }
-  });
+  } catch (error) {
+    console.log("비밀번호 틀림");
+    res.redirect("/login");
+  }
 });
 
 //로그아웃

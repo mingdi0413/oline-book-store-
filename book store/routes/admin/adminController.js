@@ -7,10 +7,7 @@ const adminservice = require("./adminController");
 router.post("/addbook", async function (req, res) {
   try {
     const result = await userservice.insertBook(req.body);
-    res.status(200).json({ status: 200, data: result, message: "Success" });
-  } catch (error) {
-    return res.status(500).json({ status: 500, message: "fail" });
-  }
+  } catch (error) {}
 });
 
 module.exports = router;
