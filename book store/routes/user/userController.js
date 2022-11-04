@@ -15,10 +15,11 @@ router.post("/sign-up", async function (req, res) {
     res.redirect("main/sign-up");
   }
 });
-//로그인
+//로그인 GET
+
+//로그인 POST
 router.post("/login", async (req, res) => {
-  const id = req.body.id;
-  const query = "select * from user where user_id='" + id + "';";
+  const query = "select * from user where user_id='" + req.body.id + "';";
   console.log(query);
 
   try {
@@ -28,6 +29,7 @@ router.post("/login", async (req, res) => {
       console.log("존재하지 않는 계정입니다.");
       res.redirect("/login");
     } else {
+      req.session.id = req.body.id;
       console.log("로그인 성공하셨습니다.");
       res.render("main/store");
     }

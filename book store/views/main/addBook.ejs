@@ -1,0 +1,64 @@
+<!-- views/home/sign-in.ejs -->
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script
+      src="https://kit.fontawesome.com/4067fec9b0.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="/css/home/sign-in.css" />
+    <script type="module" src="/js/home/sign-up.js" defer></script>
+
+    <title>도서 판매 프로그램</title>
+  </head>
+
+  <body>
+    <!-- 도서 등록 폼 -->
+    <section id="login-form">
+      <h1>
+        <div style="text-align: center">Oline Book Store</div>
+      </h1>
+      <h2>
+        <div style="text-align: center">도서 등록 페이지</div>
+      </h2>
+      <form method="post" action="./addBook">
+        <table>
+          <label>책 제목</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="책 제목"
+            id="book_name"
+            name="book_name"
+          />
+          <label>책 재고</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="책 재고"
+            id="book_stock"
+            name="book_stock"
+          />
+          <label>책 가격</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="책 가격"
+            id="book_price"
+            name="book_price"
+          />
+        </table>
+        <input type="submit" value="도서 등록" />
+      </form>
+
+      <article id="btns">
+        <input type="button" value="이전 페이지" onClick="history.go(-1)" />
+      </article>
+    </section>
+  </body>
+</html>

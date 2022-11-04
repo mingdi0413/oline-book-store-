@@ -3,6 +3,9 @@ const bodyParser = require("body-parser");
 const app = express();
 const path = require("path");
 const port = 3036;
+const session = require("express-session");
+const FileStore = require("session-file-store")(session);
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: false }));
@@ -10,7 +13,15 @@ app.use(express.json());
 
 app.use("/", require("./routes/main"));
 app.use("/", require("./routes/user"));
-
+//로그인 세션 설정
+app.use(
+  session({
+    secret: "Dn",
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore(),
+  })
+);
 //404 error
 app.use((req, res, next) => {
   res.status(404).send("일치하는 주소가 없습니다.");
