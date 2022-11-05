@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>도서 판매 프로그램</title>
+  </head>
+
+  <body>
+    <section id="addBook-form">
+      <h1>도서 추가</h1>
+
+      <article id="addBook">
+        <label for="title">제목</label>
+        <input
+          type="text"
+          class="input"
+          placeholder="필수 입력"
+          id="book_name"
+          name="book_name"
+        />
+        <label for="discription">재고</label>
+        <textarea
+          type="text"
+          class="input"
+          id="book_stock"
+          name="book_stock"
+        ></textarea>
+
+        <label for="price">가격</label>
+        <input type="text" class="input" id="book_price" name="book_price" />
+      </article>
+
+      <article id="btns">
+        <button id="create-btn">추가</button>
+      </article>
+    </section>
+  </body>
+</html>

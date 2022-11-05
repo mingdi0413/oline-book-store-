@@ -12,7 +12,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/", require("./routes/main"));
-app.use("/", require("./routes/user"));
+app.use("/user", require("./routes/user"));
+app.use("/book", require("./routes/book"));
+
 //로그인 세션 설정
 app.use(
   session({
