@@ -3,12 +3,12 @@ const pool = require("../../config/dbConfig");
 var router = express.Router();
 const bookservice = require("./bookService");
 
+// 책 등록 GET
 router.get("/addBook", async function (req, res) {
-  console.log("ho");
   res.render("book/addBook");
 });
 
-//책 등록
+//책 등록 POST
 router.post("/addBook", async function (req, res) {
   console.log("ho");
   try {
@@ -21,4 +21,14 @@ router.post("/addBook", async function (req, res) {
     res.redirect("book/addBook");
   }
 });
+
+//도서 조회
+router.get("/read", async function (req, res) {
+  console.log("hi");
+  pool.query("SELECT * FROM book", (err1, book) => {
+    if (err1) throw err1;
+    res.json(book);
+  });
+});
+
 module.exports = router;
