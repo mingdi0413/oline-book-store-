@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use("/", require("./routes/main"));
 app.use("/user", require("./routes/user"));
-app.use("/book", require("./routes/book"));
+app.use("/book", require("./routes/book/index"));
 
 //로그인 세션 설정
 app.use(
