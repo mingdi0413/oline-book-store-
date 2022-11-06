@@ -23,11 +23,12 @@ router.post("/addBook", async function (req, res) {
 });
 
 //도서 조회
-router.get("/read", async function (req, res) {
-  console.log("hi");
-  pool.query("SELECT * FROM book", (err1, book) => {
-    if (err1) throw err1;
-    res.json(book);
+router.get("/book-main", async function (req, res) {
+  const [result] = await pool.query("SELECT * FROM book");
+  console.log(result);
+  pool.release();
+  return res.render("book-main", {
+    result: result,
   });
 });
 

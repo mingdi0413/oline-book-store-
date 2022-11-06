@@ -7,7 +7,7 @@
   <body>
     <section id="addBook-form">
       <h1>도서 추가</h1>
-      
+      <form method="post" action="./addBook">
         <table>
           <label>제목</label>
           <input
@@ -33,48 +33,10 @@
             id="book_price"
             name="book_price"
           />
+          
+          
         </table>
         <input type="submit" value="도서 등록" />
       </form>
-      <!-- <form class="addBook" action="/addBook" method="post">
-        <h2>로그인</h2>
-        <div class="title">
-          <h4>제목</h4>
-          <input type="text" name="book_name" id="book_name" placeholder="title" />
-        </div>
-        <div class="book_stock">
-          <h4>재고</h4>
-          <input type="text" name="book_stock" id="book_stock" placeholder="book_stock" />
-        </div>
-        <div class="submit">
-          <input type="submit" value="로그인" />
-        </div>
-      </form> -->
-      <!-- 
-      <article id="addBook">
-        <label for="title">제목</label>
-        <input
-          type="text"
-          class="input"
-          placeholder="필수 입력"
-          id="book_name"
-          name="book_name"
-        />
-        <label for="discription">재고</label>
-        <textarea
-          type="text"
-          class="input"
-          id="book_stock"
-          name="book_stock"
-        ></textarea>
-
-        <label for="price">가격</label>
-        <input type="text" class="input" id="book_price" name="book_price" />
-      </article> -->
-
-      <article id="btns">
-        <button id="create-btn">추가</button>
-      </article>
-    </section>
-  </body>
+      
 </html>
