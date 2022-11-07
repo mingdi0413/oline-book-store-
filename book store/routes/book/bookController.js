@@ -61,4 +61,12 @@ router.get("/detail/:bookname", async function (req, res) {
   });
 });
 
+//주문 만들기
+router.post("/order", async function (req, res) {
+  console.log("hoi");
+
+  const usernum = req.session.user_num;
+  const body = req.body;
+});
+
 module.exports = router;
