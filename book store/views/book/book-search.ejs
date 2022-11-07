@@ -2,7 +2,19 @@
 <html lang="ko">
   <head>
     <title>도서 판매 프로그램</title>
+    <script src="../script/book.js" defer></script>
   </head>
+  <form action="/book/book-search" method="post">
+    <label>도서 검색</label>
+    <input
+      type="text"
+      class="input"
+      placeholder="검색어를 입력하세요."
+      id="book_name"
+      name="book_name"
+    />
+    <input type="submit" value="검색" />
+  </form>
   <section id="book-search-form">
     <table id="book-search-table">
       <thead>
@@ -10,15 +22,20 @@
           <th>번호</th>
           <th>제목</th>
           <th>가격</th>
+          <th>작가</th>
         </tr>
       </thead>
 
       <tbody>
-        <% for(i = 0; i < result.length; i++){%>
+        <% for(i = 0; i < result.length; i++){%> <% const detailUrl = "detail/"
+        + result[i].book_name %>
         <tr>
           <td><%=result[i].book_num%></td>
-          <td><%=result[i].book_name%></td>
+          <td>
+            <a href="<%=detailUrl%>"><%=result[i].book_name%></a>
+          </td>
           <td><%=result[i].book_price%></td>
+          <td><%=result[i].book_author%></td>
         </tr>
         <%}%>
       </tbody>

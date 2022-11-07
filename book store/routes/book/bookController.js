@@ -7,6 +7,7 @@ const Op = require("sequelize").Op;
 
 // 책 등록 GET
 router.get("/addBook", async function (req, res) {
+  console.log("h");
   res.render("book/addBook");
 });
 
@@ -28,22 +29,34 @@ router.post("/addBook", async function (req, res) {
 router.get("/book-main", async function (req, res) {
   const [result] = await pool.query("SELECT * FROM book");
   console.log(result);
-
   return res.render("book/book-main", {
     result: result,
   });
 });
 
 //도서 검색
-router.get("/book-search", async function (req, res) {
-  // console.log(hi);
-  const search_title = req.book_name; //검색어
-  // console.log(search);
+router.post("/book-search", async function (req, res) {
+  const search_title = req.body.book_name; //검색어
+  console.log(search_title);
   const [result] = await pool.query(
     "SELECT * FROM book WHERE book_name LIKE '%" + search_title + "%'"
   );
   console.log(result);
-  return res.render("book/book-main", {
+  return res.render("book/book-search", {
+    result: result,
+  });
+});
+
+//도서 상세정보
+router.get("/detail/:bookname", async function (req, res) {
+  console.log("hi");
+  console.log(req.params);
+
+  const [result] = await pool.query(
+    "SELECT * FROM book WHERE book_name = '" + req.body.book_name + "'"
+  );
+  console.log(result);
+  return res.render("book/detail", {
     result: result,
   });
 });

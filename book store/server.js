@@ -11,10 +11,6 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use("/", require("./routes/main"));
-app.use("/user", require("./routes/user"));
-app.use("/book", require("./routes/book/index"));
-
 //로그인 세션 설정
 app.use(
   session({
@@ -24,6 +20,11 @@ app.use(
     store: new FileStore(),
   })
 );
+
+app.use("/", require("./routes/main"));
+app.use("/user", require("./routes/user"));
+app.use("/book", require("./routes/book"));
+
 //404 error
 app.use((req, res, next) => {
   res.status(404).send("일치하는 주소가 없습니다.");

@@ -1,30 +1,23 @@
 var express = require("express");
-
 var router = express.Router();
 
 const pool = require("../../config/dbConfig");
 module.exports = {
-  insertBook: async (bookInfo) => {
+  insertBook: async (cartInfo) => {
     try {
-      const { book_name, book_stock, book_price, book_author } = bookInfo;
+      const { cart_date, cart_total } = cartInfo;
       const conn = await pool.getConnection();
       const query = `INSERT INTO book
             (
-                book_name,
-                book_stock,
-                book_price,
-                book_author
+              cart_date,
+              cart_total
               ) VALUES (
-                    ?,
-                    ?,
                     ?,
                     ?
                 );`;
       const [{ affectRows: result }] = await conn.query(query, [
-        book_name,
-        book_stock,
-        book_price,
-        book_author,
+        cart_date,
+        cart_total,
       ]);
       conn.release();
       return result;
@@ -36,7 +29,7 @@ module.exports = {
   getBookList: async () => {
     try {
       const conn = await pool.getConnection();
-      const query = "SELECT * FROM book;";
+      const query = "SELECT * FROM cart;";
       const [result] = await conn.query(query);
       conn.release();
       return result;

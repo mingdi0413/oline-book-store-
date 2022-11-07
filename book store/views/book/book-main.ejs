@@ -5,23 +5,16 @@
   </head>
 
   <body>
-    <form action="/book-search" method="get">
+    <form action="/book/book-search" method="post">
       <label>도서 검색</label>
       <input
         type="text"
         class="input"
-        placeholder="책 제목"
+        placeholder="검색어를 입력하세요."
         id="book_name"
         name="book_name"
       />
-      <input type="submit" value="제목" />
-      <!-- <button
-        type="button"
-        value="검색"
-        onclick="location.href='/book/book-search'"
-      >
-        도서 검색
-      </button> -->
+      <input type="submit" value="검색" />
     </form>
 
     <section id="read-form">
@@ -31,15 +24,17 @@
             <th>번호</th>
             <th>제목</th>
             <th>가격</th>
+            <th>작가</th>
           </tr>
         </thead>
 
         <tbody>
-          <% for(i = 0; i < result.length; i++){%>
+          <% for(let i = 0; i < result.length; i++){%>
           <tr>
             <td><%=result[i].book_num%></td>
             <td><%=result[i].book_name%></td>
             <td><%=result[i].book_price%></td>
+            <td><%=result[i].book_author%></td>
           </tr>
           <%}%>
         </tbody>
