@@ -3,22 +3,19 @@ var router = express.Router();
 
 const pool = require("../../config/dbConfig");
 module.exports = {
-  insertBook: async (cartInfo) => {
-    try {
-      const { cart_date, cart_total } = cartInfo;
+
+  checkCart: async (userNum) => {
+    try{
+      // 0 카트 존재, 1 카트 결제한 상태
       const conn = await pool.getConnection();
-      const query = `INSERT INTO book
-            (
-              cart_date,
-              cart_total
-              ) VALUES (
-                    ?,
-                    ?
-                );`;
-      const [{ affectRows: result }] = await conn.query(query, [
-        cart_date,
-        cart_total,
-      ]);
+      const query = `
+            SELECT * FROM CART
+            WHERE cart_pay = 0
+            and User_user_num = ?
+      `
+      const [{affectRows: result}] = await conn.query(query, [
+          userNum
+      ])
       conn.release();
       return result;
     } catch (error) {
@@ -26,39 +23,116 @@ module.exports = {
       throw error;
     }
   },
-  getBookList: async () => {
-    try {
+  selectCartNum: async (userNum) => {
+    try{
+      // 0 카트 존재, 1 카트 결제한 상태
       const conn = await pool.getConnection();
-      const query = "SELECT * FROM cart;";
-      const [result] = await conn.query(query);
+      const query = `
+        SELECT cart_num FROM CART
+        and User_user_num = ?
+        order by cart_date desc
+        limit 1;
+      `
+      const [{affectRows: result}] = await conn.query(query, [
+        userNum
+      ])
       conn.release();
       return result;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   },
-  //   updateUser: (bookInfo) => {},
-  //   deleteUser: (bookInfo) => {},
+  addCart: async(userNum) => {
+    try{
+      const conn = await pool.getConnection();
+      const query = `
+          INSERT INTO Cart
+            (
+              cart_date,
+              User_user_num,
+              cart_pay,  
+            )
+            values
+            (
+                now(),
+                ?,
+                0
+            )
+      `
+      const [{affectRows: result}] = await conn.query(query, [
+        userNum
+      ])
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  getCartBook: async (cartNum) => {
+    try{
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT * FROM Book_cart bc
+            join book b on bc.Book_book_num = b.book_num 
+          WHERE Book_cart_num = ?
+            
+      `
+      const [{affectRows: result}] = await conn.query(query, [
+        cartNum
+      ])
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  addCartBook: async (bookNum, cartNum) => {
+    try{
+      const conn = await pool.getConnection();
+      const query = `
+          INSERT INTO Book_cart
+            (
+              Cart_cart_num,
+              User_user_num,
+            )
+            values
+            (
+                ?,
+                ?,
+            )
+      `
+      const [{affectRows: result}] = await conn.query(query, [
+        bookNum,
+        cartNum
+      ])
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  deleteCartBook: async (bookNum, cartNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+         DELETE FROM book_cart 
+                WHERE cart_num = ?
+                and book_num = ?
+      `
+      const [{affectRows: result}] = await conn.query(query, [
+        bookNum,
+        cartNum
+      ])
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 
-  //   checkUser: async (bookInfo) => {
-  //     try {
-  //       console.log(bookInfo);
-  //       const { id, pw } = userInfo;
-  //       const conn = await pool.getConnection();
-  //       const query = "select * from User where user_id = ?;";
-
-  //       const [result] = await conn.query(query, [id]);
-  //       conn.release();
-  //       const { user_password } = result[0];
-
-  //       if (user_password === pw) {
-  //         return result[0];
-  //       } else {
-  //         return 0;
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //       throw error;
-  //     }
-  //   },
 };
