@@ -28,7 +28,7 @@ router.post("/addBook", async function (req, res) {
 //도서 조회
 router.get("/book-main", async function (req, res) {
   const [result] = await pool.query("SELECT * FROM book");
-  console.log(result);
+
   return res.render("book/book-main", {
     result: result,
   });
@@ -37,11 +37,10 @@ router.get("/book-main", async function (req, res) {
 //도서 검색
 router.post("/book-search", async function (req, res) {
   const search_title = req.body.book_name; //검색어
-  console.log(search_title);
   const [result] = await pool.query(
     "SELECT * FROM book WHERE book_name LIKE '%" + search_title + "%'"
   );
-  console.log(result);
+
   return res.render("book/book-search", {
     result: result,
   });
@@ -49,24 +48,13 @@ router.post("/book-search", async function (req, res) {
 
 //도서 상세정보
 router.get("/detail/:bookname", async function (req, res) {
-  console.log("hi");
-  console.log(req.params);
-
   const [result] = await pool.query(
-    "SELECT * FROM book WHERE book_name = '" + req.body.book_name + "'"
+    "SELECT * FROM book WHERE book_name = '" + req.params.bookname + "'"
   );
   console.log(result);
   return res.render("book/detail", {
     result: result,
   });
-});
-
-//주문 만들기
-router.post("/order", async function (req, res) {
-  console.log("hoi");
-
-  const usernum = req.session.user_num;
-  const body = req.body;
 });
 
 module.exports = router;

@@ -20,7 +20,7 @@ app.use(
     store: new FileStore(),
   })
 );
-
+app.use("/cart", require("./routes/cart"));
 app.use("/", require("./routes/main"));
 app.use("/user", require("./routes/user"));
 app.use("/book", require("./routes/book"));

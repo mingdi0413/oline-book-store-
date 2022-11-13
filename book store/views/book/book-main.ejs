@@ -25,17 +25,47 @@
             <th>제목</th>
             <th>가격</th>
             <th>작가</th>
+            <th>장바구니 담기</th>
+            <th>구매하기</th>
           </tr>
         </thead>
 
         <tbody>
           <% for(let i = 0; i < result.length; i++){%>
-          <tr>
-            <td><%=result[i].book_num%></td>
-            <td><%=result[i].book_name%></td>
-            <td><%=result[i].book_price%></td>
-            <td><%=result[i].book_author%></td>
-          </tr>
+          <form action="/cart/cart/book_add" method="post">
+            <tr>
+              <td><%=result[i].book_num%></td>
+              <input
+                type="hidden"
+                name="book_num"
+                value="<%=result[i].book_num%>"
+              />
+              <td><%=result[i].book_name%></td>
+              <input
+                type="hidden"
+                name="book_name"
+                value="<%=result[i].book_name%>"
+              />
+              <td><%=result[i].book_price%></td>
+              <input
+                type="hidden"
+                name="book_price"
+                value="<%=result[i].book_price%>"
+              />
+              <td><%=result[i].book_author%></td>
+              <input
+                type="hidden"
+                name="book_author"
+                value="<%=result[i].book_author%>"
+              />
+              <td>
+                <input type="submit" value="장바구니 담기" />
+              </td>
+              <td>
+                <input type="submit" value="바로 구매하기" />
+              </td>
+            </tr>
+          </form>
           <%}%>
         </tbody>
       </table>
