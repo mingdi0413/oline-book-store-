@@ -6,13 +6,13 @@ const session = require("express-session");
 const FileStore = require("session-file-store")(session);
 
 // 장바구니 책 조회
-router.get("/cart/cartlist", async function (req, res) {
+router.get("/cart_list", async function (req, res) {
   try {
     if (req.body) {
       const result = await cartService.getCartBook(req.session.user_num); //책 리스트 전달
-
-      res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
-              document.location.href="/";</script>`);
+      return res.render("cart/cart_list", {
+        result: result,
+      });
     }
   } catch (error) {
     res.redirect("/book/book-main");
@@ -43,7 +43,7 @@ router.post("/cart/book_add", async function (req, res) {
 });
 
 // 장바구니 책 삭제 ( 장바구니 번호와 책번호 요청)
-router.post("/cart/book/delete", async function (req, res) {
+router.post("/cart/book_delete", async function (req, res) {
   try {
     if (req.body) {
       const result = await cartService.deleteCartBook(req.body.cart_num);

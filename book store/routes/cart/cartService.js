@@ -48,6 +48,7 @@ module.exports = {
             
       `;
       const [{ affectRows: result }] = await conn.query(query, [userNum]);
+      console.log(result);
       conn.release();
       return result;
     } catch (error) {
