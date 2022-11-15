@@ -41,7 +41,10 @@ router.post("/login", async function (req, res) {
       console.log(result);
       req.session.user_num = result[0].user_num;
       req.session.user_id = result[0].user_id;
-      res.redirect("/book/book-main");
+      req.session.save(() => {
+        // 세션 스토어에 적용하는 작업
+        res.redirect("/book/book-main");
+      });
     }
   } else {
     res.send(`<script type="text/javascript">alert("아이디와 비밀번호를 입력하세요!"); 

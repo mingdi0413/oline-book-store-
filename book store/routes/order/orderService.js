@@ -110,7 +110,7 @@ module.exports = {
     }
   },
   // 주문하기
-  insertOrder: async (orderInfo) => {
+  insertOrder: async (orderInfo, userNum) => {
     try {
       const conn = await pool.getConnection();
       const query = `
@@ -145,7 +145,7 @@ module.exports = {
         orderInfo.order_card_num,
         orderInfo.order_card_type,
         orderInfo.order_total, // 총 금액 계산해서 보내세요
-        orderInfo.order_user_user_num,
+        userNum,
       ]);
       conn.release();
       return result;

@@ -26,7 +26,7 @@ module.exports = {
         user_password,
         user_phone,
       ]);
-      console.log(result);
+
       conn.release();
       return result;
     } catch (error) {

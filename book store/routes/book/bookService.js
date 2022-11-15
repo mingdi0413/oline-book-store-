@@ -26,7 +26,6 @@ module.exports = {
         book_price,
         book_author,
       ]);
-      console.log(result);
       conn.release();
       return result;
     } catch (error) {

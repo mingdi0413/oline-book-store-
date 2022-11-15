@@ -44,11 +44,10 @@ module.exports = {
       const query = `
         select * from cart c 
         join book b on b.book_num = c.book_book_num
-        where User_user_num = ?
+        where c.User_user_num = ?
             
       `;
-      const [{ affectRows: result }] = await conn.query(query, [userNum]);
-      console.log(result);
+      const [result] = await conn.query(query, [userNum]);
       conn.release();
       return result;
     } catch (error) {
@@ -62,8 +61,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query = `
-         DELETE FROM cart 
-                WHERE cart_num = ?
+         DELETE FROM cart WHERE cart_num = ?
       `;
       const [{ affectRows: result }] = await conn.query(query, [cartNum]);
       conn.release();
