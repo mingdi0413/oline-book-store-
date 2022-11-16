@@ -80,7 +80,7 @@ module.exports = {
          DELETE FROM cart 
                 WHERE user_user_num = ?
       `;
-      const [{ affectRows: result }] = await conn.query(query, [cartNum]);
+      const [{ affectRows: result }] = await conn.query(query, [userNum]);
       conn.release();
       return result;
     } catch (error) {

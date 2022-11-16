@@ -18,7 +18,6 @@
             <th>제목</th>
             <th>가격</th>
             <th>작가</th>
-            <th>삭제</th>
           </tr>
         </thead>
         <input
@@ -27,13 +26,14 @@
           onClick="location.href='/book/book-main'"
         />
         <tbody>
-          <% for(let i = 0; i < result.length; i++){%>
-          <tr>
-            <td><%=result[i].book_name%></td>
-            <td><%=result[i].book_price%></td>
-            <td><%=result[i].book_author%></td>
-          </tr>
-          <%}%>
+            <% for(let i = 0; i < result.length; i++){%>
+            <tr>
+              <td><%=result[i].book_name%></td>
+              <td><%=result[i].book_price%></td>
+              <td><%=result[i].book_author%></td>
+            </tr>
+            <%}%>
+          </form>
         </tbody>
       </table>
     </section>

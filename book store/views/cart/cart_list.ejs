@@ -26,30 +26,23 @@
           value="메인 화면"
           onClick="location.href='/book/book-main'"
         />
+
         <tbody>
-          <% for(let i = 0; i < result.length; i++){%>
-          <tr>
-            <td><%=result[i].book_name%></td>
-            <td><%=result[i].book_price%></td>
-            <td><%=result[i].book_author%></td>
-            <form method="post" action="/cart/cart/book_delete">
-              <td><input type="submit" value="삭제" /></td>
-              <input
-                type="hidden"
-                name="cart_num"
-                value="<%=result[i].cart_num%>"
-              />
-            </form>
-          </form method="post" action="/cart/cart/book_delete">
-          <td><input type="submit" value="주문하기" /></td>
-          <input
-                type="hidden"
-                name="cart_num"
-                value="<%=result[i].cart_num%>"
-              />
+          <form method="post" action="/order/addorder">
+            <input type="submit" value="주문하기" />
+            <% for(let i = 0; i < result.length; i++){%>
+            <tr>
+              <td><%=result[i].book_name%></td>
+              <td><%=result[i].book_price%></td>
+              <td><%=result[i].book_author%></td>
+              <td>
+                <a href="cart/book_delete?cart_num=<%=result[i].cart_num%>"
+                  >삭제</a
+                >
+              </td>
+            </tr>
+            <%}%>
           </form>
-          </tr>
-          <%}%>
         </tbody>
       </table>
     </section>

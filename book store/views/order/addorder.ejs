@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>도서 판매 프로그램</title>
+  </head>
+
+  <body>
+    <section id="addorder-form">
+      <h1>주문하기</h1>
+      <form method="post" action="./order">
+        <table>
+          <label>우편번호</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="우편번호"
+            id="order_zip_code"
+            name="order_zip_code"
+          />
+          <label>주소</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="주소"
+            id="order_default_address"
+            name="order_default_address"
+          />
+          <label>상세 주소</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="상세 주소"
+            id="order_detail_adress"
+            name="order_detail_adress"
+          />
+          <label>카드 유효 기간</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="카드 유효 기간"
+            id="order_card_vaild_date"
+            name="order_card_vaild_date"
+          />
+          <label>카드 번호</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="카드 번호"
+            id="order_card_num"
+            name="order_card_num"
+          />
+          <label>카드 종류</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="카드 종류"
+            id="order_card_type"
+            name="order_card_type"
+          />
+        </table>
+        <input type="submit" value="도서 등록" />
+      </form>
+      
+</html>

@@ -7,20 +7,15 @@ module.exports = {
   // 카트에서 주문 바로 했을 때
   getCartOrder: async (userNum) => {
     try {
-      const { order_date, order_total } = orderInfo;
       const conn = await pool.getConnection();
       const query = `
         SELECT  
-            cart_total,
-            book_price,
-            book_name,
-            book_author,
-            book_stock
+           *
         FROM cart c
         join book b on b.book_num = c.book_book_num 
         where c.user_user_num = ?
       `;
-      const [{ affectRows: result }] = await conn.query(query, [userNum]);
+      const [result] = await conn.query(query, [userNum]);
       conn.release();
       return result;
     } catch (error) {
@@ -109,42 +104,54 @@ module.exports = {
       throw error;
     }
   },
+  // 총액계산
+  plusOrder: async (price, order_num) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+            update orders set order_total = ? where order_num = ?
+          `;
+      await conn.query(query, [price, order_num]);
+      conn.release();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
   // 주문하기
   insertOrder: async (orderInfo, userNum) => {
     try {
+      const {} = orderInfo;
       const conn = await pool.getConnection();
       const query = `
               insert into orders(
                 order_date,
                 order_zip_code,
                 order_default_address,
-                order_detail_adress,
-                order_card_vaild_date,
+                order_detail_address,
+                order_card_valid_date,
                 order_card_num,
                 order_card_type,
                 order_total,
                 user_user_num
               ) values(
-                ?
-                ?
-                ?
-                ?
-                ?
-                ?
-                ?
-                ?
+                NOW(),
+                ?,
+                ?,
+                ?,
+                NOW(),
+                ?,
+                ?,
+                0,
                 ?
             )
             `;
-      const [{ affectRows: result }] = await conn.query(query, [
-        orderInfo.order_date,
-        orderInfo.order_zip_code, // 이건 뭔지 잘모름
+      const [{ insertId: result }] = await conn.query(query, [
+        orderInfo.order_zip_code,
         orderInfo.order_default_address,
-        orderInfo.order_detail_adress,
-        orderInfo.order_card_vaild_date,
+        orderInfo.order_detail_address,
         orderInfo.order_card_num,
         orderInfo.order_card_type,
-        orderInfo.order_total, // 총 금액 계산해서 보내세요
         userNum,
       ]);
       conn.release();
@@ -155,26 +162,24 @@ module.exports = {
     }
   },
   // 책 주문 저장하기
-  insertBookOrder: async (orderBookInfo) => {
+  insertBookOrder: async (order_num, orderBookInfo) => {
     try {
       const conn = await pool.getConnection();
       const query = `
-              insert into orders(
+              insert into book_order(
                 Order_order_num,
                 Book_book_num,
-                book_order_amount,
                 book_order_price
               ) values(
-                (select max(order_num) from orders)
-                ?
-                ?
+                ?,
+                ?,
                 ?
             )
             `;
       const [{ affectRows: result }] = await conn.query(query, [
+        order_num,
         orderBookInfo.book_book_num,
-        orderBookInfo.book_order_amount,
-        orderBookInfo.book_order_price,
+        orderBookInfo.book_price,
       ]);
       conn.release();
       return result;

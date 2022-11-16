@@ -38,11 +38,11 @@ router.post("/cart/book_add", async function (req, res) {
 });
 
 // 장바구니 책 삭제 ( 장바구니 번호와 책번호 요청)
-router.post("/cart/book_delete", async function (req, res) {
+router.get("/cart/book_delete", async function (req, res) {
   console.log("1");
   try {
-    if (req.body) {
-      const result = await cartService.deleteCartBook(req.body.cart_num);
+    if (req.query) {
+      const result = await cartService.deleteCartBook(req.query.cart_num);
       res.send(`<script type="text/javascript">alert("장바구니에서 책 삭제가 완료되었습니다!");
               document.location.href="/cart/cart_list";</script>`);
     }
