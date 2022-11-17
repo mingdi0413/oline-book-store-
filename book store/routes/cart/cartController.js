@@ -8,8 +8,13 @@ const FileStore = require("session-file-store")(session);
 
 // 장바구니 책 조회
 router.get("/cart_list", async function (req, res) {
+  let cart_total = 0;
   const result = await cartService.getCartBook(req.session.user_num); //책 리스트 전달
-  console.log(result);
+
+  for (let index = 0; index < result.length; index++) {
+    cart_total += result[index].book_price;
+  }
+  await cartService.plusCart(cart_total, req.session.user_num);
   return res.render("cart/cart_list", {
     result: result,
   });
@@ -39,7 +44,6 @@ router.post("/cart/book_add", async function (req, res) {
 
 // 장바구니 책 삭제 ( 장바구니 번호와 책번호 요청)
 router.get("/cart/book_delete", async function (req, res) {
-  console.log("1");
   try {
     if (req.query) {
       const result = await cartService.deleteCartBook(req.query.cart_num);

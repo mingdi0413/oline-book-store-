@@ -24,8 +24,8 @@ var router = express.Router();
  *  ]
  * }
  */
-//주문 정보 입력 페이지로이동
 
+//주문 정보 입력 페이지로이동
 router.post("/addorder", async function (req, res) {
   const userNum = req.session.user_num;
   return res.render("order/addorder");
@@ -35,7 +35,7 @@ router.post("/addorder", async function (req, res) {
 router.post("/order", async function (req, res) {
   const userNum = req.session.user_num;
   const orderInfo = req.body;
-  // const orderBookInfo = req.body.orderBook;
+
   try {
     if (userNum) {
       const cartBooks = await cartService.getCartBook(req.session.user_num); //책 리스트 전달
@@ -46,23 +46,20 @@ router.post("/order", async function (req, res) {
         await orderService.insertBookOrder(order_num, cartBooks[index]);
       }
       await orderService.plusOrder(order_total, order_num);
-      await cartService.deleteUserBook(userNum);
       res.send(`<script type="text/javascript">alert("주문이 완료되었습니다!");
       document.location.href="/book/book-main";</script>`);
     }
   } catch (error) {
     res.redirect("/cart/cart_list");
-    // const result = await orderService.insertOrder(orderInfo, userNum);
-    // orderBookInfo.forEach(e => { await orderService.insertBookOrder(e);
-    // })
   }
 });
 // 주문 정보 불러오기 장바구니에서 구매
 router.get("/order_list", async function (req, res) {
-  console.log("1");
   const usernum = req.session.user_num;
+  const orderNum = await orderService.getorderNum(usernum);
+  let ordersnum = orderNum[0].order_num;
+  const result = await orderService.getOrder(ordersnum);
 
-  const result = await orderService.getCartOrder(usernum);
   return res.render("order/order_list", {
     result: result,
   });
@@ -76,12 +73,39 @@ router.get("/order_list/:bookNum", async function (req, res) {
 
   const result = await orderService.getBookOrder(bookNum);
 });
-// 카드 정보 불러오기 (Modal 추천)
-router.get("/order/card", async function (req, res) {
+
+//주문 정보 수정 페이지로이동
+router.get("/order_refund", async function (req, res) {
   const userNum = req.session.user_num;
 
-  const result = await orderService.getCard(userNum);
+  const usernum = req.session.user_num;
+  const orderNum = await orderService.getorderNum(usernum);
+  let ordersnum = orderNum[0].order_num;
+  const result = await orderService.getOrder(ordersnum);
+  return res.render("order/order_refund", {
+    result: result,
+  });
 });
+
+// 주문목록에서 삭제
+router.get("/order/order_delete", async function (req, res) {
+  try {
+    if (req.query) {
+      const result = await orderService.deleteOrder(req.query.book_book_num);
+      res.send(`<script type="text/javascript">alert("주문에서 책 삭제가 완료되었습니다!");
+              document.location.href="/order/order_list";</script>`);
+    }
+  } catch (error) {
+    res.redirect("/order/order_refund");
+  }
+});
+
+// // 카드 정보 불러오기 (Modal 추천)
+// router.get("/order/card", async function (req, res) {
+//   const userNum = req.session.user_num;
+
+//   const result = await orderService.getCard(userNum);
+// });
 
 // // 주소 정보 불러오기 (Modal 추천)
 // router.get("/order/card", async function (req, res) {

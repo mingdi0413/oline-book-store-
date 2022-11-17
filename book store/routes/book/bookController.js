@@ -7,7 +7,6 @@ const Op = require("sequelize").Op;
 
 // 책 등록 GET
 router.get("/addBook", async function (req, res) {
-  console.log("h");
   res.render("book/addBook");
 });
 

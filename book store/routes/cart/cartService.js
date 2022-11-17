@@ -48,6 +48,7 @@ module.exports = {
             
       `;
       const [result] = await conn.query(query, [userNum]);
+      console.log(userNum);
       conn.release();
       return result;
     } catch (error) {
@@ -83,6 +84,20 @@ module.exports = {
       const [{ affectRows: result }] = await conn.query(query, [userNum]);
       conn.release();
       return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  // 총액계산
+  plusCart: async (price, user_num) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+            update cart set cart_total = ? where User_user_num = ?
+          `;
+      await conn.query(query, [price, user_num]);
+      conn.release();
     } catch (error) {
       console.log(error);
       throw error;

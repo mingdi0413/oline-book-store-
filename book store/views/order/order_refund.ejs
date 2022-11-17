@@ -25,17 +25,20 @@
           value="메인 화면"
           onClick="location.href='/book/book-main'"
         />
-        <input
-          type="button"
-          value="주문 수정"
-          onClick="location.href='/order/order_refund'"
-        />
         <tbody>
+          <form method="get" action="/order/order_list">
+            <input type="submit" value="수정완료" />
             <% for(let i = 0; i < result.length; i++){%>
             <tr>
               <td><%=result[i].book_name%></td>
               <td><%=result[i].book_price%></td>
               <td><%=result[i].book_author%></td>
+              <td>
+                <a
+                  href="order/order_delete?book_book_num=<%=result[i].book_num%>"
+                  >반품</a
+                >
+              </td>
             </tr>
             <%}%>
           </form>

@@ -188,4 +188,52 @@ module.exports = {
       throw error;
     }
   },
+  // 주문 일부취소
+  deleteOrder: async (bookNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+         DELETE FROM book_order WHERE book_book_num = ?
+      `;
+      const [{ affectRows: result }] = await conn.query(query, [bookNum]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  //  주문목록 불러오기
+  getOrder: async (orderNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+      SELECT  
+      * FROM book_order bo join book b on b.book_num = bo.book_book_num where bo.Order_order_num = ?
+      `;
+      const [result] = await conn.query(query, [orderNum]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  // orderNUm 받아오기
+  getorderNum: async (userNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT order_num from orders
+          WHERE user_user_num = ?
+        `;
+      const [result] = await conn.query(query, [userNum]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };
