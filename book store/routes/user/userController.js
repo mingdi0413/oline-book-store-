@@ -1,7 +1,9 @@
 var express = require("express");
 const pool = require("../../config/dbConfig");
+const userService = require("./userService");
 var router = express.Router();
 const userservice = require("./userService");
+const orderService = require("../order/orderService");
 
 //회원가입 페이지
 router.get("/sign-up", async function (req, res) {

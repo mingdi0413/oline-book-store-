@@ -2,6 +2,7 @@ var express = require("express");
 const pool = require("../../config/dbConfig");
 const orderService = require("./orderService");
 const cartService = require("../cart/cartService");
+const userService = require("../user/userService");
 var router = express.Router();
 
 // 이때 json을 order, order book 나누는게 좋음 ex)
@@ -46,10 +47,13 @@ router.post("/order", async function (req, res) {
         await orderService.insertBookOrder(order_num, cartBooks[index]);
       }
       await orderService.plusOrder(order_total, order_num);
+      await cartService.deleteUserBook(req.session.user_num);
+
       res.send(`<script type="text/javascript">alert("주문이 완료되었습니다!");
       document.location.href="/book/book-main";</script>`);
     }
   } catch (error) {
+    console.log(error);
     res.redirect("/cart/cart_list");
   }
 });
@@ -67,10 +71,8 @@ router.get("/order_list", async function (req, res) {
 
 //주문정보 불러오기 책에서 바로구매
 router.get("/order_list/:bookNum", async function (req, res) {
-  console.log("1");
   const usernum = req.session.user_num;
   const book = req.params.bookNum; // 카트에서 오는지 북에서 들고오는지 확인
-
   const result = await orderService.getBookOrder(bookNum);
 });
 

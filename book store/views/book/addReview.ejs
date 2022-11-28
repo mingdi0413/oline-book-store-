@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>도서 판매 프로그램</title>
+  </head>
+
+  <body>
+    <section id="addReview-form">
+      <h1>리뷰 작성</h1>
+      <form method="post" action="./addReview">
+        <table>
+          
+          <label>리뷰내용</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="내용"
+            id="content"
+            name="content"
+          />
+          <label>평점</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="평점"
+            id="average"
+            name="average"
+          />
+        </table>
+        <input type="submit" value="리뷰 등록" />
+      </form>
+      
+</html>

@@ -40,70 +40,129 @@ module.exports = {
     }
   },
 
-  // 유저 카드 데이터 조회
-  getCard: async (userNum) => {
+  //   // 유저 카드 데이터 조회
+  //   getCard: async (userNum) => {
+  //     try {
+  //       const conn = await pool.getConnection();
+  //       const query = `
+  //           SELECT * FROM card
+  //           WHERE user_user_num = ?
+  //         `;
+  //       const [{ affectRows: result }] = await conn.query(query, [userNum]);
+  //       conn.release();
+  //       return result;
+  //     } catch (error) {
+  //       console.log(error);
+  //       throw error;
+  //     }
+  //   },
+  //   // 유저 주소 데이터 조회
+  //   getAddress: async (userNum) => {
+  //     try {
+  //       const conn = await pool.getConnection();
+  //       const query = `
+  //           SELECT * FROM address
+  //           WHERE user_user_num = ?
+  //         `;
+  //       const [{ affectRows: result }] = await conn.query(query, [userNum]);
+  //       conn.release();
+  //       return result;
+  //     } catch (error) {
+  //       console.log(error);
+  //       throw error;
+  //     }
+  //   },
+  //   // 카드 데이터 뽑기 dom 접근하여 form에 추가하기
+  //   getCardPick: async (cardNum) => {
+  //     try {
+  //       const conn = await pool.getConnection();
+  //       const query = `
+  //             SELECT * FROM card
+  //             WHERE card_num = ?
+  //           `;
+  //       const [{ affectRows: result }] = await conn.query(query, [cardNum]);
+  //       conn.release();
+  //       return result;
+  //     } catch (error) {
+  //       console.log(error);
+  //       throw error;
+  //     }
+  //   },
+  //   // 계좌 데이터 뽑기 dom 접근하여 form에 추가하기
+  //   getAddressPick: async (addressNum) => {
+  //     try {
+  //       const conn = await pool.getConnection();
+  //       const query = `
+  //             SELECT * FROM address
+  //             WHERE address_num = ?
+  //           `;
+  //       const [{ affectRows: result }] = await conn.query(query, [addressNum]);
+  //       conn.release();
+  //       return result;
+  //     } catch (error) {
+  //       console.log(error);
+  //       throw error;
+  //     }
+  //   },
+
+  // 책 권수 차감
+  minusBookStock: async (stock, book_num) => {
     try {
       const conn = await pool.getConnection();
       const query = `
-          SELECT * FROM card
-          WHERE user_user_num = ?
-        `;
-      const [{ affectRows: result }] = await conn.query(query, [userNum]);
+                update book set book_stock = book_stock - ? where book_num = ?
+              `;
+      await conn.query(query, [stock, book_num]);
       conn.release();
-      return result;
     } catch (error) {
       console.log(error);
       throw error;
     }
   },
-  // 유저 주소 데이터 조회
-  getAddress: async (userNum) => {
+
+  // 책 평점 수정
+  UpadateBookAverage: async (average, book_num) => {
     try {
       const conn = await pool.getConnection();
       const query = `
-          SELECT * FROM address
-          WHERE user_user_num = ?
-        `;
-      const [{ affectRows: result }] = await conn.query(query, [userNum]);
+                update book set average = (average/person) where book_num = ?
+              `;
+      await conn.query(query, [average, book_num]);
       conn.release();
-      return result;
     } catch (error) {
       console.log(error);
       throw error;
     }
   },
-  // 카드 데이터 뽑기 dom 접근하여 form에 추가하기
-  getCardPick: async (cardNum) => {
+  // 책 평점 합구하기
+  getBookSum: async (average, book_num) => {
     try {
       const conn = await pool.getConnection();
       const query = `
-            SELECT * FROM card
-            WHERE card_num = ?
-          `;
-      const [{ affectRows: result }] = await conn.query(query, [cardNum]);
+                update book set person = person+? where book_num = ?
+              `;
+      await conn.query(query, [average, book_num]);
       conn.release();
-      return result;
     } catch (error) {
       console.log(error);
       throw error;
     }
   },
-  // 계좌 데이터 뽑기 dom 접근하여 form에 추가하기
-  getAddressPick: async (addressNum) => {
+  // 책 판매량 증가
+  plusBookSellCount: async (stock, book_num) => {
     try {
       const conn = await pool.getConnection();
       const query = `
-            SELECT * FROM address
-            WHERE address_num = ?
-          `;
-      const [{ affectRows: result }] = await conn.query(query, [addressNum]);
+                update book set sell_count = sell_count + ? where book_num = ?
+              `;
+      await conn.query(query, [stock, book_num]);
       conn.release();
-      return result;
     } catch (error) {
       console.log(error);
       throw error;
     }
   },
+
   // 총액계산
   plusOrder: async (price, order_num) => {
     try {
@@ -111,6 +170,21 @@ module.exports = {
       const query = `
             update orders set order_total = ? where order_num = ?
           `;
+      await conn.query(query, [price, order_num]);
+      conn.release();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  // 총액 포인트 차감
+  minusPoint: async (price, order_num) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+                update orders set minusPoint = ? where order_num = ?
+              `;
       await conn.query(query, [price, order_num]);
       conn.release();
     } catch (error) {
@@ -133,7 +207,8 @@ module.exports = {
                 order_card_num,
                 order_card_type,
                 order_total,
-                user_user_num
+                user_user_num,
+                minusPoint
               ) values(
                 NOW(),
                 ?,
@@ -143,6 +218,7 @@ module.exports = {
                 ?,
                 ?,
                 0,
+                ?,
                 ?
             )
             `;
@@ -153,9 +229,24 @@ module.exports = {
         orderInfo.order_card_num,
         orderInfo.order_card_type,
         userNum,
+        orderInfo.minusPoint,
       ]);
       conn.release();
       return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  //결제후 스탬프 조회
+  getStamp: async (orderNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+      SELECT COUNT(*) as cnt FROM book_order_num where Order_order_num = ?       
+          `;
+      await conn.query(query, [orderNum]);
+      conn.release();
     } catch (error) {
       console.log(error);
       throw error;

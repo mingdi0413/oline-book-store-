@@ -48,7 +48,6 @@ module.exports = {
             
       `;
       const [result] = await conn.query(query, [userNum]);
-      console.log(userNum);
       conn.release();
       return result;
     } catch (error) {

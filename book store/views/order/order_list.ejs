@@ -25,17 +25,61 @@
           value="메인 화면"
           onClick="location.href='/book/book-main'"
         />
+
         <input
           type="button"
           value="주문 수정"
           onClick="location.href='/order/order_refund'"
         />
         <tbody>
+          <form action="/book/addReview" method="post">
             <% for(let i = 0; i < result.length; i++){%>
             <tr>
+              <td><%=result[i].book_num%></td>
+              <input
+                type="hidden"
+                name="book_num"
+                value="<%=result[i].book_num%>"
+              />
               <td><%=result[i].book_name%></td>
+              <input
+                type="hidden"
+                name="book_name"
+                value="<%=result[i].book_name%>"
+              />
               <td><%=result[i].book_price%></td>
+              <input
+                type="hidden"
+                name="book_price"
+                value="<%=result[i].book_price%>"
+              />
               <td><%=result[i].book_author%></td>
+              <input
+                type="hidden"
+                name="book_author"
+                value="<%=result[i].book_author%>"
+              />
+              <td>
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="리뷰내용"
+                  id="content"
+                  name="content"
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="평점"
+                  id="average"
+                  name="average"
+                />
+              </td>
+              <td>
+                <input type="submit" value="리뷰 등록" />
+              </td>
             </tr>
             <%}%>
           </form>

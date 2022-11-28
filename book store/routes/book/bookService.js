@@ -33,6 +33,53 @@ module.exports = {
       throw error;
     }
   },
+  // 유저 장바구니 조회하기
+  updateBookAverage: async (bookNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+        select * from cart c 
+        join book b on b.book_num = c.book_book_num
+        where c.User_user_num = ?
+            
+      `;
+      const [result] = await conn.query(query, [bookNum]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  //리뷰 작성
+  insertReview: async (content, average, bookNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `INSERT INTO review
+            (
+                content,
+                date,
+                average,
+                Book_book_num,
+
+              ) VALUES (
+                    ?,
+                    NOW(),
+                    ?,
+                    ?   
+                );`;
+      const [{ affectRows: result }] = await conn.query(query, [
+        bookNum,
+        content,
+        average,
+      ]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
   getBookList: async () => {
     try {
       const conn = await pool.getConnection();
