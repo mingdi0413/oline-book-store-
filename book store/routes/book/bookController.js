@@ -23,38 +23,6 @@ router.post("/addBook", async function (req, res) {
     res.redirect("book/addBook");
   }
 });
-// // flqb 등록 GET
-// router.get("/addReview", async function (req, res) {
-//   res.render("book/addReview");
-// });
-
-//리뷰 등록
-router.post("/addReview", async function (req, res) {
-  const usernum = req.session.user_num;
-  // const orderNum = await orderService.getorderNum(usernum);
-  // let ordersnum = orderNum[0].order_num;
-  // const result = await orderService.getOrder(ordersnum);
-
-  console.log(req.body);
-  try {
-    if (req.body) {
-      await bookservice.insertReview(
-        req.body.book_num,
-        req.body.content,
-        req.body.average
-      );
-    }
-  } catch (error) {
-    console.log(error);
-    res.redirect("/book/book-main");
-  }
-});
-
-// // const res = await getBestSeller();
-// async function getBestSeller() {
-//   const [result] = await pool.query("SELECT * FROM book ");
-//   return result;
-// }
 
 //도서 조회
 router.get("/book-main", async function (req, res) {

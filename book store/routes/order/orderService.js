@@ -300,6 +300,23 @@ module.exports = {
       const conn = await pool.getConnection();
       const query = `
       SELECT  
+      * FROM orders where order_num = ?;
+      `;
+      const [[result]] = await conn.query(query, [orderNum]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  //  주문정보 불러오기
+  getOrderDetail: async (orderNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+      SELECT  
       * FROM book_order bo join book b on b.book_num = bo.book_book_num where bo.Order_order_num = ?
       `;
       const [result] = await conn.query(query, [orderNum]);

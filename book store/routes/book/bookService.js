@@ -51,35 +51,7 @@ module.exports = {
       throw error;
     }
   },
-  //리뷰 작성
-  insertReview: async (content, average, bookNum) => {
-    try {
-      const conn = await pool.getConnection();
-      const query = `INSERT INTO review
-            (
-                content,
-                date,
-                average,
-                Book_book_num,
 
-              ) VALUES (
-                    ?,
-                    NOW(),
-                    ?,
-                    ?   
-                );`;
-      const [{ affectRows: result }] = await conn.query(query, [
-        bookNum,
-        content,
-        average,
-      ]);
-      conn.release();
-      return result;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  },
   getBookList: async () => {
     try {
       const conn = await pool.getConnection();

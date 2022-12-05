@@ -57,13 +57,27 @@ router.post("/order", async function (req, res) {
     res.redirect("/cart/cart_list");
   }
 });
+
+// 주문 상세정보 불러오기
+router.get("/order_detail", async function (req, res) {
+  const order_num = req.query.order_num;
+  const result = await orderService.getOrderDetail(order_num);
+
+  return res.render("order/order_detail", {
+    result: result,
+  });
+});
+
 // 주문 정보 불러오기 장바구니에서 구매
 router.get("/order_list", async function (req, res) {
   const usernum = req.session.user_num;
-  const orderNum = await orderService.getorderNum(usernum);
-  let ordersnum = orderNum[0].order_num;
-  const result = await orderService.getOrder(ordersnum);
+  console.log(req.query);
+  const orderNums = await orderService.getorderNum(usernum);
 
+  let result = [];
+  for (let i = 0; i < orderNums.length; i++) {
+    result.push(await orderService.getOrder(orderNums[i].order_num));
+  }
   return res.render("order/order_list", {
     result: result,
   });

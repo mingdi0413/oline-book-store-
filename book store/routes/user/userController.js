@@ -40,7 +40,6 @@ router.post("/login", async function (req, res) {
       [userId, password]
     );
     if (result.length === 1) {
-      console.log(result);
       req.session.user_num = result[0].user_num;
       req.session.user_id = result[0].user_id;
       req.session.save(() => {
@@ -51,6 +50,28 @@ router.post("/login", async function (req, res) {
   } else {
     res.send(`<script type="text/javascript">alert("아이디와 비밀번호를 입력하세요!"); 
     document.location.href="/";</script>`);
+  }
+});
+
+// 리뷰등록
+router.post("/add-review", async function (req, res) {
+  const userNum = req.session.user_num;
+  const reviewInfo = { ...req.body, userNum };
+  console.log(reviewInfo);
+  try {
+    if (req.body) {
+      try {
+        if (req.body) {
+          const result = await userService.insertReview(reviewInfo);
+          res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
+                  document.location.href="/book/book-main";</script>`);
+        }
+      } catch (error) {
+        res.redirect("/book/book-main");
+      }
+    }
+  } catch (error) {
+    res.redirect("/book/book-main");
   }
 });
 

@@ -101,46 +101,42 @@ module.exports = {
       throw error;
     }
   },
-  //회원 스탬프 조회
-  getStamp: async (userNum) => {
+  //리뷰 작성
+  insertReview: async ({
+    book_num,
+    book_order_num,
+    review_content,
+    star_rating,
+    userNum,
+  }) => {
     try {
       const conn = await pool.getConnection();
-      const query = `
-    select user_stamp from User
-          
-        `;
-      await conn.query(query, [userNum]);
+      const query = `INSERT INTO review
+            (
+                content,
+                createDate,
+                star_rating,
+                user_user_num,
+                book_book_num,
+                book_order_num
+
+              ) VALUES (
+                    ?,
+                    NOW(),
+                    ?,
+                    ?,
+                    ?,
+                    ?   
+                );`;
+      const [{ affectRows: result }] = await conn.query(query, [
+        review_content,
+        star_rating,
+        userNum,
+        book_num,
+        book_order_num,
+      ]);
       conn.release();
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  },
-  //결제후 스탬프 추가
-  minusStamp: async (userNum) => {
-    try {
-      const conn = await pool.getConnection();
-      const query = `
-      update User set uesr_stamp ? where user_num = ?
-            
-          `;
-      await conn.query(query, [price, userNum]);
-      conn.release();
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  },
-  //결제후 스탬프 추가
-  addStamp: async (userNum) => {
-    try {
-      const conn = await pool.getConnection();
-      const query = `
-      update User set uesr_stamp ? where user_num = ?
-            
-          `;
-      await conn.query(query, [price, userNum]);
-      conn.release();
+      return result;
     } catch (error) {
       console.log(error);
       throw error;

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>도서 판매 프로그램</title>
+  </head>
+  <body>
+    <h1>
+      <div style="text-align: center">Oline Book Store</div>
+    </h1>
+    <section id="read-form">
+      <h2><div style="text-align: center">회원님의 주문내역</div></h2>
+      <input
+        type="button"
+        value="메인 화면"
+        onClick="location.href='/book/book-main'"
+      />
+      <input
+        type="button"
+        value="주문 수정"
+        onClick="location.href='/order/order_refund'"
+      />
+      <table id="read-table">
+        <thead>
+          <tr id="field">
+            <th>제목</th>
+            <th>가격</th>
+            <th>작가</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% for(let i = 0; i < result.length; i++){%>
+          <form action="/user/add-review" method="post">
+            <tr>
+              <input
+                type="hidden"
+                name="book_num"
+                value="<%=result[i].book_num%>"
+              />
+              <input
+                type="hidden"
+                name="book_order_num"
+                value="<%=result[i].book_order_num%>"
+              />
+              <td><%=result[i].book_name%></td>
+              <td><%=result[i].book_price%></td>
+              <td><%=result[i].book_author%></td>
+              <td>
+                <input
+                  type="text"
+                  value=""
+                  name="review_content"
+                  placeholder="내용"
+                />
+                <input
+                  type="number"
+                  min="0"
+                  max="5"
+                  name="star_rating"
+                  step="0.5"
+                  value="3.0"
+                />
+                <input type="submit" value="리뷰 등록" />
+              </td>
+            </tr>
+          </form>
+          <%}%>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>
