@@ -15,6 +15,7 @@ router.post("/sign-up", async function (req, res) {
   try {
     if (req.body) {
       const result = await userservice.insertUser(req.body);
+
       res.send(`<script type="text/javascript">alert("회원가입이 완료되었습니다!");
               document.location.href="/user/sign-up";</script>`);
     }

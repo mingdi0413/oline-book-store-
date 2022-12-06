@@ -14,6 +14,7 @@ module.exports = {
               user_id,
               user_password,
               user_phone,
+
               user_point
               ) VALUES (
                     ?,
@@ -21,6 +22,7 @@ module.exports = {
                     ?,
                     ?,
                     0
+
                 );`;
       const [{ affectRows: result }] = await conn.query(query, [
         user_name,
@@ -71,7 +73,25 @@ module.exports = {
       throw error;
     }
   },
-  //결제후 포인트 추가
+
+  //추천인 확인
+  getRecommendUser: async (userid) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT user_num from user
+          WHERE user_id = ?
+        `;
+      const [result] = await conn.query(query, [userid]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  // 포인트 추가
   plusPoint: async (price, userNum) => {
     try {
       const conn = await pool.getConnection();
