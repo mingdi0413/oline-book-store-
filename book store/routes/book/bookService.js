@@ -33,29 +33,24 @@ module.exports = {
       throw error;
     }
   },
-  // 유저 장바구니 조회하기
-  updateBookAverage: async (bookNum) => {
+  //도서 리뷰 조회
+  getBookReview: async (bookNum) => {
     try {
       const conn = await pool.getConnection();
-      const query = `
-        select * from cart c 
-        join book b on b.book_num = c.book_book_num
-        where c.User_user_num = ?
-            
-      `;
+      const query =
+        "SELECT content, createdDate, star_rating FROM review where book_book_num = ?;";
       const [result] = await conn.query(query, [bookNum]);
       conn.release();
       return result;
     } catch (error) {
-      console.log(error);
       throw error;
     }
   },
-
-  getBookList: async () => {
+  //판매량 높은순 도서 조회
+  getBestBook: async () => {
     try {
       const conn = await pool.getConnection();
-      const query = "SELECT * FROM book;";
+      const query = "SELECT * FROM book ORDER BY sell_count desc limit 5;";
       const [result] = await conn.query(query);
       conn.release();
       return result;
@@ -63,28 +58,4 @@ module.exports = {
       throw error;
     }
   },
-  //   updateUser: (bookInfo) => {},
-  //   deleteUser: (bookInfo) => {},
-
-  //   checkUser: async (bookInfo) => {
-  //     try {
-  //       console.log(bookInfo);
-  //       const { id, pw } = userInfo;
-  //       const conn = await pool.getConnection();
-  //       const query = "select * from User where user_id = ?;";
-
-  //       const [result] = await conn.query(query, [id]);
-  //       conn.release();
-  //       const { user_password } = result[0];
-
-  //       if (user_password === pw) {
-  //         return result[0];
-  //       } else {
-  //         return 0;
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //       throw error;
-  //     }
-  //   },
 };

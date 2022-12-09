@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>도서 판매 프로그램</title>
+  </head>
+
+  <body>
+    <section id="addCoupon-form">
+      <h1>쿠폰 추가</h1>
+      <form method="post" action="./addCoupon">
+        <table>
+          <label>쿠폰명</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="쿠폰명"
+            id="name"
+            name="name"
+          />
+          <label>쿠폰 타입</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="쿠폰 타입"
+            id="type"
+            name="type"
+          />
+          <label>할인 가격</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="할인 가격"
+            id="discount"
+            name="discount"
+          />
+          
+        </table>
+        <input type="submit" value="쿠폰 등록" />
+      </form>
+      
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>도서 판매 프로그램</title>
+  </head>
+
+  <body>
+    <button type="button" onclick="location.href='/cart/cart_list'">
+      내 장바구니
+    </button>
+
+    <button type="button" onclick="location.href='/order/order_list'">
+      내 주문목록
+    </button>
+
+    <button type="button" onclick="location.href='/user/community'">
+      커뮤니티
+    </button>
+    <button
+      type="button"
+      onclick="location.href='/user/add-post?isEvent=false'"
+    >
+      글작성
+    </button>
+    <br />
+    <tbody>
+      <% for(let i = 0; i < board.length; i++){%><% const detailUrl = "detail/"
+      + board[i].category %>
+      <tr>
+        <td>
+          <a href="<%=detailUrl%>"><%=board[i].category%></a>
+        </td>
+        <br />
+      </tr>
+      <%}%>
+    </tbody>
+    <section id="read-form">
+      <table id="read-table">
+        <thead>
+          <tr id="field">
+            <th>글 번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+            <th>추천수</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% for(let i = 0; i < result.length; i++){%><% const detailUrl =
+          "detail/" + result[i].title %>
+          <tr>
+            <td><%=result[i].num%></td>
+            <td>
+              <a href="<%=detailUrl%>"><%=result[i].title%></a>
+            </td>
+            <td><%=result[i].name%></td>
+            <td><%=result[i].createdAt%></td>
+            <td><%=result[i].recommended%></td>
+            <td><%=result[i].inquired%></td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>

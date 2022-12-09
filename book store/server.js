@@ -23,8 +23,10 @@ app.use(
 app.use("/cart", require("./routes/cart"));
 app.use("/order", require("./routes/order"));
 app.use("/", require("./routes/main"));
+app.use("/coupon", require("./routes/coupon"));
 app.use("/user", require("./routes/user"));
 app.use("/book", require("./routes/book"));
+app.use("/admin", require("./routes/admin"));
 
 //404 error
 app.use((req, res, next) => {

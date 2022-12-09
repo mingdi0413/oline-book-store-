@@ -90,6 +90,22 @@ module.exports = {
       throw error;
     }
   },
+  // UserPoint 받아오기
+  getUserCoupon: async (userNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT user_point from user
+          WHERE user_num = ?
+        `;
+      const [result] = await conn.query(query, [userNum]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 
   // 포인트 추가
   plusPoint: async (price, userNum) => {
@@ -155,6 +171,182 @@ module.exports = {
         book_num,
         book_order_num,
       ]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  //게시글 작성
+  insertPost: async ({ title, content, userNum, board_num, event_num }) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `INSERT INTO post
+              (
+                title,
+                content,
+                createdAt,
+                user_user_num,
+                board_num,
+                event_num
+                ) VALUES (
+                      ?,
+                      ?,
+                      NOW(),
+                      ?,
+                      ?,
+                      ?
+                  );`;
+      const [{ affectRows: result }] = await conn.query(query, [
+        title,
+        content,
+        userNum,
+        board_num,
+        event_num,
+      ]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  // 전체 게시판가져오기
+  getAllBoard: async () => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT category from board 
+        `;
+      const [result] = await conn.query(query);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  // category로 게시판 번호 가져오기
+  getBoardNum: async (category) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT num from board where category = ?
+        `;
+      const [result] = await conn.query(query, [category]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  // 진행중인 이벤트 가져오기
+  getIngEvent: async () => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+      SELECT * from event where NOW()<end_Date; 
+        `;
+      const [result] = await conn.query(query);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  // category로 게시판 번호 가져오기
+  getBoardNum: async (category) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT num from board where category = ?
+        `;
+      const [result] = await conn.query(query, [category]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  // 해당 카테고리 게시글 가져오기
+  getBoardCategory: async (boardNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT num, title, content, createdAt, recommended, inquired, user_name name from post left join user on post.user_user_num = user.user_num where board_num = ?
+        order by createdAt DESC
+        `;
+      const [result] = await conn.query(query, [boardNum]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  // 진행중인 이벤트 게시글 가져오기
+  getIngPost: async (postNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+      SELECT post.num,title from post left join event on post.event_num = event.num where NOW()<end_Date and start_Date < NOW() and post.num = ?; 
+        `;
+      const [result] = await conn.query(query, [postNum]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  // 전체 게시글 불러오기
+  getAllPost: async () => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+      SELECT num, title, content, createdAt, recommended, inquired, user_name name from post left join user on post.user_user_num = user.user_num
+        order by createdAt DESC
+      `;
+      const [result] = await conn.query(query);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  // 게시글 정보 불러오기
+  getPostDetail: async (postTitle) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+      SELECT num, title, content, createdAt, recommended, inquired, user_name name from post left join user on post.user_user_num = user.user_num where title = ?
+        order by createdAt DESC
+      `;
+      const [result] = await conn.query(query, [postTitle]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
+  // userNum으로 게시글 작성자 가져오기
+  getPostOwner: async (userNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT user_name from user where user_num = ?
+        `;
+      const [result] = await conn.query(query, userNum);
       conn.release();
       return result;
     } catch (error) {
