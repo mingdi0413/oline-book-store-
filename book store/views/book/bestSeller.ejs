@@ -5,6 +5,7 @@
   </head>
 
   <body>
+    
     <form action="/book/book-search" method="post">
       <label>도서 검색</label>
       <input
@@ -36,12 +37,11 @@
     <button type="button" onclick="location.href='/user/add-post?isEvent=true'">
       이벤트 글 작성
     </button>
-
+    <h4>베스트셀러</h1>
     <section id="read-form">
       <table id="read-table">
         <thead>
           <tr id="field">
-            <th>번호</th>
             <th>제목</th>
             <th>가격</th>
             <th>작가</th>
@@ -54,7 +54,6 @@
           <% for(let i = 0; i < result.length; i++){%>
           <form action="/cart/cart/book_add" method="post">
             <tr>
-              <td><%=result[i].book_num%></td>
               <input
                 type="hidden"
                 name="book_num"

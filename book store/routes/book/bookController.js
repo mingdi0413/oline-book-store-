@@ -55,5 +55,12 @@ router.get("/detail/:bookname", async function (req, res) {
     result: result,
   });
 });
-
+//도서 상세정보
+router.get("/bestSeller", async function (req, res) {
+  const result = await bookservice.getBestBook();
+  console.log(result);
+  return res.render("book/bestSeller", {
+    result: result,
+  });
+});
 module.exports = router;

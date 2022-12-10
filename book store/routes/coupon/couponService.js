@@ -73,7 +73,7 @@ module.exports = {
       const query = `
           SELECT id from own_coupon where num = ?
           `;
-      const result = await conn.query(query, [couponNum]);
+      const [result] = await conn.query(query, [couponNum]);
       conn.release();
       return result;
     } catch (error) {
@@ -82,7 +82,7 @@ module.exports = {
     }
   },
   //쿠폰 번호로 할인 금액 불러오기
-  getCouponId: async (couponId) => {
+  getCouponDiscount: async (couponId) => {
     try {
       const conn = await pool.getConnection();
       const query = `

@@ -52,9 +52,13 @@ router.post("/order", async function (req, res) {
       }
       //쿠폰 있을경우
       if (couponNum != 0) {
-        const couponId = await couponservice.getCouponId(couponNum);
-        console.log(couponId);
-        await orderService.useCoupon(userNum, couponId);
+        const [couponId] = await couponservice.getCouponId(couponNum);
+        await orderService.useCoupon(userNum, couponId.id);
+        let [minus_total_coupon] = await couponservice.getCouponDiscount(
+          couponId.id
+        );
+        order_total -= minus_total_coupon.discount;
+        await orderService.plusOrder(order_total, order_num);
       }
       //쿠폰없을 경우
       else {
