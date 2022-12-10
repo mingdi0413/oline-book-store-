@@ -3,6 +3,7 @@ const pool = require("../../config/dbConfig");
 const orderService = require("./orderService");
 const cartService = require("../cart/cartService");
 const userService = require("../user/userService");
+const couponservice = require("../coupon/couponservice");
 var router = express.Router();
 
 // 이때 json을 order, order book 나누는게 좋음 ex)
@@ -29,14 +30,17 @@ var router = express.Router();
 //주문 정보 입력 페이지로이동
 router.post("/addorder", async function (req, res) {
   const userNum = req.session.user_num;
-  return res.render("order/addorder");
+  const result = await couponservice.getCanUseCoupon(userNum);
+  return res.render("order/addorder", {
+    result: result,
+  });
 });
 
 //주문 하기
 router.post("/order", async function (req, res) {
   const userNum = req.session.user_num;
   const orderInfo = req.body;
-
+  const couponNum = req.body.own_coupon_num;
   try {
     if (userNum) {
       const cartBooks = await cartService.getCartBook(req.session.user_num); //책 리스트 전달
@@ -46,7 +50,16 @@ router.post("/order", async function (req, res) {
         order_total += cartBooks[index].book_price;
         await orderService.insertBookOrder(order_num, cartBooks[index]);
       }
-      await orderService.plusOrder(order_total, order_num);
+      //쿠폰 있을경우
+      if (couponNum != 0) {
+        const couponId = await couponservice.getCouponId(couponNum);
+        console.log(couponId);
+        await orderService.useCoupon(userNum, couponId);
+      }
+      //쿠폰없을 경우
+      else {
+        await orderService.plusOrder(order_total, order_num);
+      }
       await cartService.deleteUserBook(req.session.user_num);
 
       res.send(`<script type="text/javascript">alert("주문이 완료되었습니다!");
@@ -94,8 +107,7 @@ router.get("/order_list/:bookNum", async function (req, res) {
 router.get("/order_refund", async function (req, res) {
   const userNum = req.session.user_num;
 
-  const usernum = req.session.user_num;
-  const orderNum = await orderService.getorderNum(usernum);
+  const orderNum = await orderService.getorderNum(userNum);
   let ordersnum = orderNum[0].order_num;
   const result = await orderService.getOrder(ordersnum);
   return res.render("order/order_refund", {

@@ -65,6 +65,13 @@
             id="minusPoint"
             name="minusPoint"
           />
+          <label>사용하실 쿠폰</label>
+          <select name="own_coupon_num">
+            <option value="0">사용안함</option>
+            <% for(let i = 0; i < result.length; i++){%>
+            <option value="<%=result[i].num%>"><%=result[i].name%></option>
+            <%}%>
+          </select>
           
         </table>
         <input type="submit" value="주문하기" />

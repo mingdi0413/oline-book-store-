@@ -177,6 +177,20 @@ module.exports = {
       throw error;
     }
   },
+  // 쿠폰 사용처리
+  useCoupon: async (userNum, couponId) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+            update own_coupon set useYN = 1 where user_user_num = ? and id = ? 
+          `;
+      await conn.query(query, [userNum, couponId]);
+      conn.release();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 
   // 총액 포인트 차감
   minusPoint: async (price, order_num) => {
@@ -208,7 +222,8 @@ module.exports = {
                 order_card_type,
                 order_total,
                 user_user_num,
-                minusPoint
+                minusPoint,
+                own_coupon_num
               ) values(
                 NOW(),
                 ?,
@@ -218,6 +233,7 @@ module.exports = {
                 ?,
                 ?,
                 0,
+                ?,
                 ?,
                 ?
             )
@@ -230,6 +246,7 @@ module.exports = {
         orderInfo.order_card_type,
         userNum,
         orderInfo.minusPoint,
+        orderInfo.own_coupon_num,
       ]);
       conn.release();
       return result;

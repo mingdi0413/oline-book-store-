@@ -4,6 +4,7 @@ const userService = require("./userService");
 var router = express.Router();
 const userservice = require("./userService");
 const orderService = require("../order/orderService");
+const couponservice = require("../coupon/couponservice");
 
 //회원가입 페이지
 router.get("/sign-up", async function (req, res) {
@@ -55,6 +56,14 @@ router.post("/login", async function (req, res) {
     document.location.href="/";</script>`);
   }
 });
+//쿠폰목록 가져오기
+router.get("/myPage", async function (req, res) {
+  userNum = req.session.user_num;
+  const result = await couponservice.getOwnCoupon(userNum);
+  return res.render("main/myPage", {
+    result: result,
+  });
+});
 //커뮤니티 GET
 router.get("/community", async function (req, res) {
   const board = await userService.getAllBoard();
@@ -84,7 +93,10 @@ router.get("/detail/:category", async function (req, res) {
   if (boardNum == 4 && req.query.isIngEvent === "true") {
     for (let i = 0; i < result.length; i++) {
       let temp = await userService.getIngPost(result[i].num);
-      result2.push(temp);
+
+      if (temp[0] != undefined) {
+        result2.push(temp[0]);
+      }
     }
     console.log(result2);
     return res.render("post/boardDetail", {

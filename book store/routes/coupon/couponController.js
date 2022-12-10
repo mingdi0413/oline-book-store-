@@ -3,7 +3,7 @@ const pool = require("../../config/dbConfig");
 var router = express.Router();
 const couponservice = require("./couponservice");
 
-//로그인 GET
+//쿠폰 지급
 router.get("/addCoupon", async function (req, res) {
   res.render("coupon/addCoupon");
 });

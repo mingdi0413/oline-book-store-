@@ -294,7 +294,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query = `
-      SELECT post.num,title from post left join event on post.event_num = event.num where NOW()<end_Date and start_Date < NOW() and post.num = ?; 
+      SELECT post.num,title,user_user_num,createdAt,inquired,recommended from post left join event on post.event_num = event.num where NOW()<end_Date and start_Date < NOW() and post.num = ?; 
         `;
       const [result] = await conn.query(query, [postNum]);
       conn.release();
