@@ -2,6 +2,8 @@
 <html lang="ko">
   <head>
     <title>도서 판매 프로그램</title>
+    <link rel="stylesheet" type="text/css" href="./css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
   </head>
 
   <body>
@@ -16,20 +18,45 @@
       />
       <input type="submit" value="검색" />
     </form>
-    <button type="button" onclick="location.href='/cart/cart_list'">
-      내 장바구니
-    </button>
+    <div>
+      <ul>
+        <li>
+          <button type="button" onclick="location.href='/cart/cart_list'">
+            내 장바구니
+          </button>
 
-    <button type="button" onclick="location.href='/order/order_list'">
-      내 주문목록
-    </button>
-    <button type="button" onclick="location.href='/user/myPage'">
-      마이페이지
-    </button>
+          <button type="button" onclick="location.href='/order/order_list'">
+            내 주문목록
+          </button>
+
+          <% if(is_logined === false){%>
+          <button type="button" onclick="location.href='/user/login'">
+            로그인
+          </button>
+          <button type="button" onclick="location.href='/user/sign-up'">
+            회원가입
+          </button>
+          <%}else{%>
+          <button type="button" onclick="location.href='/user/myPage'">
+            마이페이지
+          </button>
+          <button type="button" onclick="location.href='/user/logout'">
+            로그아웃
+          </button>
+          <%}%>
+        </li>
+      </ul>
+    </div>
+
     <button type="button" onclick="location.href='/book/bestSeller'">
       베스트셀러
     </button>
-
+    <button type="button" onclick="location.href='/book/eliteSeller'">
+      ElitePick
+    </button>
+    <button type="button" onclick="location.href='/book/eventCouponSeller'">
+      이런책은 어때요?
+    </button>
     <button type="button" onclick="location.href='/user/community'">
       커뮤니티
     </button>
@@ -41,7 +68,6 @@
       <table id="read-table">
         <thead>
           <tr id="field">
-            <th>번호</th>
             <th>제목</th>
             <th>가격</th>
             <th>작가</th>
@@ -49,12 +75,10 @@
             <th>구매하기</th>
           </tr>
         </thead>
-
         <tbody>
           <% for(let i = 0; i < result.length; i++){%>
           <form action="/cart/cart/book_add" method="post">
             <tr>
-              <td><%=result[i].book_num%></td>
               <input
                 type="hidden"
                 name="book_num"
@@ -78,6 +102,7 @@
                 name="book_author"
                 value="<%=result[i].book_author%>"
               />
+
               <td>
                 <input type="submit" value="장바구니 담기" />
               </td>

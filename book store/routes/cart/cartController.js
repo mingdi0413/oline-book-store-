@@ -31,7 +31,7 @@ router.post("/cart/book_add", async function (req, res) {
             req.body.book_num
           );
           res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
-                  document.location.href="/book/book-main";</script>`);
+                  document.location.href="/";</script>`);
         }
       } catch (error) {
         res.redirect("/book/book-main");

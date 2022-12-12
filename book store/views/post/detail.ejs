@@ -24,8 +24,9 @@
 
       <article id="btns">
         <input type="button" value="이전 페이지" onClick="history.go(-1)" />
-        <input type="submit" value="장바구니 추가" />
-        <input type="submit" value="바로 구매하기" />
+        <form action="/user/post/<%= result.title %>" method="post">
+          <input type="submit" value="추천하기" />
+        </form>
       </article>
     </section>
   </body>

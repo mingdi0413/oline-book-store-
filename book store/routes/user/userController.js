@@ -18,7 +18,7 @@ router.post("/sign-up", async function (req, res) {
       const result = await userservice.insertUser(req.body);
 
       res.send(`<script type="text/javascript">alert("회원가입이 완료되었습니다!");
-              document.location.href="/user/sign-up";</script>`);
+              document.location.href="/user/login";</script>`);
     }
   } catch (error) {
     console.log("체크");
@@ -48,7 +48,7 @@ router.post("/login", async function (req, res) {
       req.session.save(() => {
         if (req.session.user_num === 0) {
           res.render("admin/admin");
-        } else res.redirect("/book/book-main");
+        } else res.redirect("/");
       });
     }
   } else {
@@ -78,6 +78,15 @@ router.get("/post/:postTitle", async function (req, res) {
   const postTitle = req.params.postTitle;
   const [result] = await userService.getPostDetail(postTitle);
   console.log(result);
+  return res.render("post/detail", {
+    result: result,
+  });
+});
+//게시글 상세정보
+router.post("/post/:postTitle", async function (req, res) {
+  const postTitle = req.params.postTitle;
+  const [result] = await userService.getPostDetail(postTitle);
+  await userService.addPostRecommend(result.num);
   return res.render("post/detail", {
     result: result,
   });
@@ -137,7 +146,7 @@ router.post("/add-post", async function (req, res) {
         if (req.body) {
           const result = await userService.insertPost(postInfo);
           res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
-                  document.location.href="/book/book-main";</script>`);
+                  document.location.href="/";</script>`);
         }
       } catch (error) {
         res.redirect("/book/book-main");
@@ -158,7 +167,7 @@ router.post("/add-review", async function (req, res) {
         if (req.body) {
           const result = await userService.insertReview(reviewInfo);
           res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
-                  document.location.href="/book/book-main";</script>`);
+                  document.location.href="/";</script>`);
         }
       } catch (error) {
         res.redirect("/book/book-main");
@@ -179,7 +188,7 @@ router.post("/add-post", async function (req, res) {
         if (req.body) {
           const result = await userService.insertPost(postInfo);
           res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
-                  document.location.href="/book/book-main";</script>`);
+                  document.location.href="/";</script>`);
         }
       } catch (error) {
         res.redirect("/book/book-main");
@@ -191,8 +200,9 @@ router.post("/add-post", async function (req, res) {
 });
 //로그아웃
 router.get("/logout", function (req, res) {
-  res.redirect("/store");
+  console.log("1");
   req.session.destroy();
+  res.redirect("/");
 });
 
 module.exports = router;

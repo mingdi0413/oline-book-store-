@@ -12,16 +12,18 @@
     </h1>
     <section id="read-form">
       <h2><div style="text-align: center">회원님의 주문내역</div></h2>
+      <button type="button" onclick="location.href='/user/myPage'">
+        마이페이지
+      </button>
+      <button type="button" onclick="location.href='/cart/cart_list'">
+        내 장바구니
+      </button>
       <input
         type="button"
         value="메인 화면"
         onClick="location.href='/book/book-main'"
       />
-      <input
-        type="button"
-        value="주문 수정"
-        onClick="location.href='/order/order_refund'"
-      />
+
       <table id="read-table">
         <thead>
           <tr id="field">

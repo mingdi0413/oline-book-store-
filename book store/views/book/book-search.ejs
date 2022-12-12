@@ -34,7 +34,6 @@
         <% for(i = 0; i < result.length; i++){%> <% const detailUrl = "detail/"
         + result[i].book_name %>
         <form action="/cart/cart/book_add" method="post">
-          <td><%=result[i].book_num%></td>
           <input type="hidden" name="book_num" value="<%=result[i].book_num%>">
           <td>
             <a href="<%=detailUrl%>"><%=result[i].book_name%></a>
@@ -48,7 +47,7 @@
           </td>
           <td><input type="submit" value="바로 구매하기" /></td>
         </form>
-        </tr>
+        </tr> 
         <%}%>
       </tbody>
     </table>

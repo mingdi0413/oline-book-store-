@@ -354,4 +354,19 @@ module.exports = {
       throw error;
     }
   },
+  // userNum으로 게시글 추천수 증가
+  addPostRecommend: async (postNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+      update post set recommended = recommended + 1 where num = ?
+        `;
+      const [result] = await conn.query(query, postNum);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };

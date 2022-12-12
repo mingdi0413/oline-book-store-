@@ -4,6 +4,7 @@ var router = express.Router();
 const bookservice = require("./bookService");
 const orderService = require("../order/orderService");
 const sequelize = require("sequelize");
+const couponService = require("../coupon/couponService");
 const Op = require("sequelize").Op;
 
 // 책 등록 GET
@@ -24,15 +25,6 @@ router.post("/addBook", async function (req, res) {
   }
 });
 
-//도서 조회
-router.get("/book-main", async function (req, res) {
-  const [result] = await pool.query("SELECT * FROM book ");
-
-  return res.render("book/book-main", {
-    result: result,
-  });
-});
-
 //도서 검색
 router.post("/book-search", async function (req, res) {
   const search_title = req.body.book_name; //검색어
@@ -47,19 +39,47 @@ router.post("/book-search", async function (req, res) {
 
 //도서 상세정보
 router.get("/detail/:bookname", async function (req, res) {
-  const [result] = await pool.query(
+  const [[arr]] = await pool.query(
     "SELECT * FROM book WHERE book_name = '" + req.params.bookname + "'"
   );
+  console.log(arr);
+  let result = await bookservice.getBookRating(arr.book_num);
   console.log(result);
   return res.render("book/detail", {
     result: result,
   });
 });
-//도서 상세정보
+//베스트 셀러 조회
 router.get("/bestSeller", async function (req, res) {
-  const result = await bookservice.getBestBook();
-  console.log(result);
+  const result = await bookservice.getBestSeller();
   return res.render("book/bestSeller", {
+    result: result,
+  });
+});
+
+//이벤트 당첨자 주문목록 조회(*메인 기능)
+router.get("/EliteSeller", async function (req, res) {
+  const couponNum = await couponService.getEventCouponNum();
+  const orderNum = await bookservice.getEliteOrderNum(couponNum.num);
+  const bookNum = await bookservice.getEliteSeller(orderNum.order_num);
+  let result = [];
+  for (let i = 0; i < bookNum.length; i++) {
+    result.push(await bookservice.getBookForNum(bookNum[i].book_book_num));
+  }
+  return res.render("book/eliteSeller", {
+    result: result,
+  });
+});
+//이벤트 당첨자 주문목록 조회(*메인 기능)
+router.get("/eventCouponSeller", async function (req, res) {
+  const bookOrder = await bookservice.getEliteCouponSeller();
+  console.log(bookOrder);
+  let result = [];
+  for (let i = 0; i < bookOrder.length; i++) {
+    result.push(await bookservice.getBookForNum(bookOrder[i].Book_book_num));
+  }
+  console.log(result);
+  return res.render("book/eliteSeller", {
     result: result,
   });
 });

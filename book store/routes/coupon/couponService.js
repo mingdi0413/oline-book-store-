@@ -96,4 +96,20 @@ module.exports = {
       throw error;
     }
   },
+
+  //모의고사 이벤트 쿠폰 보유 번호 가져오기
+  getEventCouponNum: async () => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+          SELECT num from own_coupon where coupon_num = 3
+          `;
+      const [[result]] = await conn.query(query);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 };
