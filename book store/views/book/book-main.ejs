@@ -2,228 +2,118 @@
 <html lang="ko">
   <head>
     <title>도서 판매 프로그램</title>
-    <link rel="stylesheet" type="text/css" href="reset.css" />
-    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link rel="stylesheet" type="text/css" href="./css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
   </head>
 
   <body>
-    <div id="wrap">
-      <div id="header">
-          <div class="head_top">
-              <div class="info_mn">
-                  <ul>
-                      <li><button type="button" onclick="location.href='/cart/cart_list'">
-                      장바구니
-                      </button></li>
-            
-                      <li><button type="button" onclick="location.href='/order/order_list'">
-                      주문목록
-                      </button></li>
-                      
-                      <li><% if(is_logined === false){%>
-                      <button type="button" onclick="location.href='/user/login'">
-                        로그인
-                      </button>
-                      </li>
-                      <li>
-                      <button type="button" onclick="location.href='/user/sign-up'">
-                        회원가입
-                      </button>
-                      </li>
-                      <li>
-                      <%}else{%>
-                      <button type="button" onclick="location.href='/user/myPage'">
-                        마이페이지
-                      </button>
-                      </li>
-                      <li>
-                      <button type="button" onclick="location.href='/user/logout'">
-                        로그아웃
-                      </button>
-                      <%}%></li>
-                  </ul>
-              </div>
-          </div>
-          <div class="head_bottom">
-              <div class="logo"><h1>DSU 서점</h1></div>
-              <div class="search">
-                  <form action="/book/book-search" method="post" class="search_in">
-                      <!-- <label>도서 검색</label> -->
-                      <input
-                        type="text"
-                        class="input"
-                        placeholder="검색어를 입력하세요."
-                        id="book_name"
-                        name="book_name"
-                      />
-                      <input type="submit" value="검색" class="btn"/>
-                    </form>
-          </div>
-      </div>
-      <section class="contents1">
-          <nav class="nav">
-              <ul>
-                  <li><button type="button" onclick="location.href='/book/bestSeller'">
-                    베스트셀러
-                  </button></li>
-                  <li><button type="button" onclick="location.href='/book/eliteSeller'">
-                    ElitePick
-                  </button></li>
-                  <li><button type="button" onclick="location.href='/book/eventCouponSeller'">
-                    이런책은 어때요?
-                  </button></li>
-                  <li><button type="button" onclick="location.href='/user/community'">
-                    커뮤니티
-                  </button></li>
-                  <li><button type="button" onclick="location.href='/user/add-post?isEvent=true'">
-                    이벤트 글 작성
-                  </button></li>
-              </ul>
-          </nav>
-          <div class="txt_box1">
-              <h2>2023년 6월 수학 모의고사<br> 
-              최고의 문제 풀이 찾기 이벤트</h2>
-          </div>    
-              <div class="txt_box2">
-              <p class="txt1"><b>참여기간</b>
-              2022년 11월 20일 ~ 2022년 12월 20일<br>
-              <b>당첨자 발표</b>2022년 12월 30일 오후 6시</p>
-              </div>
-              <div class="popup">
-                  <div id="popup_image" class="popup_image" style="position: absolute; z-index:10000; top:250px; left:1200px; display: none;">
-                      <div style="width:200px;height:300px;">
-                          <h4>이런 상품은 어떠세요?</h4>
-                          <img src="./img/popup_img.jpeg" alt="">
-                          <p>문제풀이 이벤트 최다 추천 수 <br>
-                          회원이 직접 고른 참고서</p>  
-                      </div>
-                      <div class="popup_bar">
-                          <a href="javascript:closePopupNotToday()" class="white">오늘그만보기</a>
-                          <a class="pull-right white" href="javascript:closeMainPopup();">닫기</a>
-                      </div>
-                  </div>
-              </div>
-      </section>
-      <section class="contents2">
-          <div class="con2_box1">
-              <h3>모의고사 문제지</h3>
-              <ul>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-              </ul>
-          </div>
-          <div class="con2_box2">
-              <h3>베스트 도서</h3>
-              <ul>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-                  <li><img src="" alt=""></li>
-              </ul>
-          </div>
-      </section>
-      <section id="read-form">
-        <table id="read-table">
-          <thead>
-            <tr id="field">
-              <th>제목</th>
-              <th>가격</th>
-              <th>작가</th>
-              <th>장바구니 담기</th>
-              <th>구매하기</th>
+    <form action="/book/book-search" method="post">
+      <label>도서 검색</label>
+      <input
+        type="text"
+        class="input"
+        placeholder="검색어를 입력하세요."
+        id="book_name"
+        name="book_name"
+      />
+      <input type="submit" value="검색" />
+    </form>
+    <div>
+      <ul>
+        <li>
+          <button type="button" onclick="location.href='/cart/cart_list'">
+            내 장바구니
+          </button>
+
+          <button type="button" onclick="location.href='/order/order_list'">
+            내 주문목록
+          </button>
+
+          <% if(is_logined === false){%>
+          <button type="button" onclick="location.href='/user/login'">
+            로그인
+          </button>
+          <button type="button" onclick="location.href='/user/sign-up'">
+            회원가입
+          </button>
+          <%}else{%>
+          <button type="button" onclick="location.href='/user/myPage'">
+            마이페이지
+          </button>
+          <button type="button" onclick="location.href='/user/logout'">
+            로그아웃
+          </button>
+          <%}%>
+        </li>
+      </ul>
+    </div>
+
+    <button type="button" onclick="location.href='/book/bestSeller'">
+      베스트셀러
+    </button>
+    <button type="button" onclick="location.href='/book/eliteSeller'">
+      ElitePick
+    </button>
+    <button type="button" onclick="location.href='/book/eventCouponSeller'">
+      이런책은 어때요?
+    </button>
+    <button type="button" onclick="location.href='/user/community'">
+      커뮤니티
+    </button>
+    <button type="button" onclick="location.href='/user/add-post?isEvent=true'">
+      이벤트 글 작성
+    </button>
+
+    <section id="read-form">
+      <table id="read-table">
+        <thead>
+          <tr id="field">
+            <th>제목</th>
+            <th>가격</th>
+            <th>작가</th>
+            <th>장바구니 담기</th>
+            <th>구매하기</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < result.length; i++){%>
+          <form action="/cart/cart/book_add" method="post">
+            <tr>
+              <input
+                type="hidden"
+                name="book_num"
+                value="<%=result[i].book_num%>"
+              />
+              <td><%=result[i].book_name%></td>
+              <input
+                type="hidden"
+                name="book_name"
+                value="<%=result[i].book_name%>"
+              />
+              <td><%=result[i].book_price%></td>
+              <input
+                type="hidden"
+                name="book_price"
+                value="<%=result[i].book_price%>"
+              />
+              <td><%=result[i].book_author%></td>
+              <input
+                type="hidden"
+                name="book_author"
+                value="<%=result[i].book_author%>"
+              />
+
+              <td>
+                <input type="submit" value="장바구니 담기" />
+              </td>
+              <td>
+                <input type="submit" value="바로 구매하기" />
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            <% for(let i = 0; i < result.length; i++){%>
-            <form action="/cart/cart/book_add" method="post">
-              <tr>
-                <input
-                  type="hidden"
-                  name="book_num"
-                  value="<%=result[i].book_num%>"
-                />
-                <td><%=result[i].book_name%></td>
-                <input
-                  type="hidden"
-                  name="book_name"
-                  value="<%=result[i].book_name%>"
-                />
-                <td><%=result[i].book_price%></td>
-                <input
-                  type="hidden"
-                  name="book_price"
-                  value="<%=result[i].book_price%>"
-                />
-                <td><%=result[i].book_author%></td>
-                <input
-                  type="hidden"
-                  name="book_author"
-                  value="<%=result[i].book_author%>"
-                />
-  
-                <td>
-                  <input type="submit" value="장바구니 담기" />
-                </td>
-                <td>
-                  <input type="submit" value="바로 구매하기" />
-                </td>
-              </tr>
-            </form>
-            <%}%>
-          </tbody>
-        </table>
-      </section>
-  </div>
-  <script>
-      if(getCookie("notToday")!="Y"){
-              $("#popup_image").show('fade');
-      }
-      
-      function closePopupNotToday(){	             
-              setCookie('notToday','Y', 1);
-              $("#popup_image").hide('fade');
-      }
-      function setCookie(name, value, expiredays) {
-          var today = new Date();
-              today.setDate(today.getDate() + expiredays);
-      
-              document.cookie = name + '=' + escape(value) + '; path=/; expires=' + today.toGMTString() + "; domain=example.com";
-      }
-      
-      function getCookie(name) 
-      { 
-          var cName = name + "="; 
-          var x = 0; 
-          while ( x <= document.cookie.length ) 
-          { 
-              var y = (x+cName.length); 
-              if ( document.cookie.substring( x, y ) == cName ) 
-              { 
-                  if ( (endOfCookie=document.cookie.indexOf( ";", y )) == -1 ) 
-                      endOfCookie = document.cookie.length;
-                  return unescape( document.cookie.substring( y, endOfCookie ) ); 
-              } 
-              x = document.cookie.indexOf( " ", x ) + 1; 
-              if ( x == 0 ) 
-                  break; 
-          } 
-          return ""; 
-      }
-      function closeMainPopup(){
-          $("#popup_image").hide('fade');
-      }
-      </script>
+          </form>
+          <%}%>
+        </tbody>
+      </table>
+    </section>
   </body>
 </html>
