@@ -3,7 +3,7 @@
   <head>
     <title>도서 판매 프로그램</title>
     <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/detail.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/bookList.css" rel="stylesheet" type="text/css">
   </head>
 
   <body>
@@ -44,6 +44,7 @@
                   </ul>
               </div>
           </div>
+        </div>  
           <div class="head_bottom">
               <div class="logo"><a href="/">DSU서점</a></div>
               <div class="search">
@@ -70,62 +71,61 @@
                       <li> <button type="button" onclick="location.href='/user/community'">
                         커뮤니티
                       </button></li>
-                      <li><button type="button" onclick="location.href='/book/bookList'">도서 목록</button></li>
+                      <li><button type="button" onclick="location.href='/book/bookList'">
+                        도서 목록</button></li>
                       <li><button>이벤트</button></li>
                   </ul>
               </nav>
           </div>
-    <section id="detail-form">
-      <article id="detail-view">
-        
-        <h2 class="head"><span><%= result.book_name %></span></h2>
-        <img src="<%=result.img_link%>"/>
-        <div id="things">
-          <p class="des">설명
-            <span><%=result.description %></span></p>
-          <p class="author">
-            저자<span><%=result.book_author %></span></p>
-          <p class="price">
-            가격<span><%=result.book_price %>원</span></p>
-          <h2 class="avg">평점
-            <span><%=result.average %></span>
-          </h2>
-          
-        </div>
-      </article>
 
-      <article id="btns">
-        <form action="/cart/cart/book_add" method="post">
-          <tr>
-            <input
-              type="hidden"
-              name="book_num"
-              value="<%=result.book_num%>"
-            />
-            <inputs
-              type="hidden"
-              name="book_name"
-              value="<%=result.book_name%>"
-            />
-            <input
-              type="hidden"
-              name="book_price"
-              value="<%=result.book_price%>"
-            />
-            <input
-              type="hidden"
-              name="book_author"
-              value="<%=result.book_author%>"
-            />
+            <section class="contents2">
+              <div>
+                <h2>DSU서점 도서 목록</h2>
+                <ul>
+                  <% for(let i = 0; i < result.length; i++){%><% const detailUrl = "/book/detail/"
+                  + result[i].book_name %>
+                <li>
+                  <a href="<%=detailUrl%>">
+                    <img src="<%=result[i].img_link%>"/>
+                  </a>
+                    <h4>제목</h4>
+                    <p>가격</p>
+                    <article id="btns">
+                      <form action="/cart/cart/book_add" method="post">
+                        <tr>
+                          <input
+                            type="hidden"
+                            name="book_num"
+                            value="<%=result[i].book_num%>"
+                          />
+                          <inputs
+                            type="hidden"
+                            name="book_name"
+                            value="<%=result[i].book_name%>"
+                          />
+                          <input
+                            type="hidden"
+                            name="book_price"
+                            value="<%=result[i].book_price%>"
+                          />
+                          <input
+                            type="hidden"
+                            name="book_author"
+                            value="<%=result[i].book_author%>"
+                          />
+              
+                          <td>
+                            <input type="submit" value="장바구니 담기" />
+                          </td>
+                        </form>
+                    </article>
+                  
+                </li>
+                <%}%>
+                </ul>
 
-            <td>
-              <input type="submit" value="장바구니 담기" class="btns"/>
-            </td>
-          </form>
-      </article>
-    </section>
-
-  </div>
-</div>
+              </div>
+        </section>
+    </div> 
   </body>
 </html>
