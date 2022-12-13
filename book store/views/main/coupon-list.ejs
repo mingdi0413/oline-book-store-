@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>도서 판매 프로그램</title>
+  </head>
+  <body>
+    <h1>
+      <div style="text-align: center">Oline Book Store</div>
+    </h1>
+    <section id="read-form">
+      <h2><div style="text-align: center">회원님의 쿠폰목록</div></h2>
+      <input
+        type="button"
+        value="메인 화면"
+        onClick="location.href='/book/book-main'"
+      />
+      
+      <table id="read-table">
+        <thead>
+          
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < result.length; i++){%>
+          <tr>
+            <td><%=result[i].type%></td>
+            <% if (result[i].type == 0) { %> <th>1000원 할인 쿠폰</th> <% } %>
+            <% if (result[i].type == 1) { %> <th>10%원 할인 쿠폰</th> <% } %>
+            <td><%=result[i].useYN%></td>
+            <% if (result[i].useYN == 0) { %> <th>사용안함</th> <% } %>
+            <% if (result[i].useYN == 1) { %> <th>사용함</th> <% } %>
+            <td><%=result[i].giveDate%></td>         
+            <%}%>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>
