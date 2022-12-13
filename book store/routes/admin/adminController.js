@@ -50,7 +50,6 @@ router.get("/giveCoupon", async function (req, res) {
 router.post("/giveCoupon", async function (req, res) {
   try {
     if (req.body) {
-      console.log(req.body);
       const result = await adminservice.giveCoupon(req.body);
       res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
                   document.location.href="/";</script>`);

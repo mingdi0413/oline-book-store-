@@ -48,8 +48,7 @@
         </thead>
 
         <tbody>
-          <% for(let i = 0; i < result.length; i++){%><% const detailUrl =
-          "detail/" + result[i].title %>
+          <% for(let i = 0; i < result.length; i++){%>
           <tr>
             <td><%=result[i].num%></td>
             <td>
@@ -60,7 +59,6 @@
             <td><%=result[i].name%></td>
             <td><%=result[i].createdAt%></td>
             <td><%=result[i].recommended%></td>
-            <td><%=result[i].inquired%></td>
           </tr>
           <%}%>
         </tbody>

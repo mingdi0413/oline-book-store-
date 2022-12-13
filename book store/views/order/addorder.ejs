@@ -10,53 +10,17 @@
       <form method="post" action="./order">
         <table>
           <label>우편번호</label>
-          <input
-            type="text"
-            class="input"
-            placeholder="우편번호"
-            id="order_zip_code"
-            name="order_zip_code"
-          />
-          <label>주소</label>
-          <input
-            type="text"
-            class="input"
-            placeholder="주소"
-            id="order_default_address"
-            name="order_default_address"
-          />
-          <label>상세 주소</label>
-          <input
-            type="text"
-            class="input"
-            placeholder="상세 주소"
-            id="order_detail_adress"
-            name="order_detail_adress"
-          />
-          <label>카드 유효 기간</label>
-          <input
-            type="text"
-            class="input"
-            placeholder="카드 유효 기간"
-            id="order_card_vaild_date"
-            name="order_card_vaild_date"
-          />
+          <select name="order_zip_code">
+            <% for(let i = 0; i < address.length; i++){%>
+            <option value="<%=address[i].zip_code%>"><%=address[i].zip_code%></option>
+            <%}%>
+          </select>
           <label>카드 번호</label>
-          <input
-            type="text"
-            class="input"
-            placeholder="카드 번호"
-            id="order_card_num"
-            name="order_card_num"
-          />
-          <label>카드 종류</label>
-          <input
-            type="text"
-            class="input"
-            placeholder="카드 종류"
-            id="order_card_type"
-            name="order_card_type"
-          />
+          <select name="card_id">
+            <% for(let i = 0; i < card.length; i++){%>
+            <option value="<%=card[i].card_id%>"><%=card[i].card_id%></option>
+            <%}%>
+          </select>
           <label>사용하실 포인트</label>
           <input
             type="text"
@@ -76,5 +40,5 @@
         </table>
         <input type="submit" value="주문하기" />
       </form>
-      
+       
 </html>

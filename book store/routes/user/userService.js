@@ -278,7 +278,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query = `
-          SELECT num, title, content, createdAt, recommended, inquired, user_name name from post left join user on post.user_user_num = user.user_num where board_num = ?
+          SELECT num, title, content, createdAt, recommended, user_name name from post left join user on post.user_user_num = user.user_num where board_num = ?
         order by createdAt DESC
         `;
       const [result] = await conn.query(query, [boardNum]);
@@ -294,7 +294,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query = `
-      SELECT post.num,title,user_user_num,createdAt,inquired,recommended from post left join event on post.event_num = event.num where NOW()<end_Date and start_Date < NOW() and post.num = ?; 
+      SELECT post.num,title,user_user_num,createdAt,recommended from post left join event on post.event_num = event.num where NOW()<end_Date and start_Date < NOW() and post.num = ?; 
         `;
       const [result] = await conn.query(query, [postNum]);
       conn.release();
@@ -310,7 +310,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query = `
-      SELECT num, title, content, createdAt, recommended, inquired, user_name name from post left join user on post.user_user_num = user.user_num
+      SELECT num, title, content, createdAt, recommended,  user_name name from post left join user on post.user_user_num = user.user_num
         order by createdAt DESC
       `;
       const [result] = await conn.query(query);
@@ -327,7 +327,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query = `
-      SELECT num, title, content, createdAt, recommended, inquired, user_name name from post left join user on post.user_user_num = user.user_num where title = ?
+      SELECT num, title, content, createdAt, recommended, user_name name from post left join user on post.user_user_num = user.user_num where title = ?
         order by createdAt DESC
       `;
       const [result] = await conn.query(query, [postTitle]);

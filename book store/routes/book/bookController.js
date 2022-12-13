@@ -42,9 +42,7 @@ router.get("/detail/:bookname", async function (req, res) {
   const [[arr]] = await pool.query(
     "SELECT * FROM book WHERE book_name = '" + req.params.bookname + "'"
   );
-  console.log(arr);
   let result = await bookservice.getBookRating(arr.book_num);
-  console.log(result);
   return res.render("book/detail", {
     result: result,
   });
@@ -73,12 +71,10 @@ router.get("/EliteSeller", async function (req, res) {
 //이벤트 당첨자 주문목록 조회(*메인 기능)
 router.get("/eventCouponSeller", async function (req, res) {
   const bookOrder = await bookservice.getEliteCouponSeller();
-  console.log(bookOrder);
   let result = [];
   for (let i = 0; i < bookOrder.length; i++) {
     result.push(await bookservice.getBookForNum(bookOrder[i].Book_book_num));
   }
-  console.log(result);
   return res.render("book/eliteSeller", {
     result: result,
   });

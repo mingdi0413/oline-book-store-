@@ -21,7 +21,6 @@ router.post("/sign-up", async function (req, res) {
               document.location.href="/user/login";</script>`);
     }
   } catch (error) {
-    console.log("체크");
     res.redirect("main/sign-up");
   }
 });
@@ -76,6 +75,7 @@ router.get("/community", async function (req, res) {
 //게시글 상세정보
 router.get("/post/:postTitle", async function (req, res) {
   const postTitle = req.params.postTitle;
+  console.log(postTitle);
   const [result] = await userService.getPostDetail(postTitle);
   console.log(result);
   return res.render("post/detail", {
@@ -86,6 +86,7 @@ router.get("/post/:postTitle", async function (req, res) {
 router.post("/post/:postTitle", async function (req, res) {
   const postTitle = req.params.postTitle;
   const [result] = await userService.getPostDetail(postTitle);
+
   await userService.addPostRecommend(result.num);
   return res.render("post/detail", {
     result: result,
@@ -107,7 +108,6 @@ router.get("/detail/:category", async function (req, res) {
         result2.push(temp[0]);
       }
     }
-    console.log(result2);
     return res.render("post/boardDetail", {
       board: board,
       result: result2,
@@ -124,7 +124,6 @@ router.get("/detail/:category", async function (req, res) {
 router.get("/add-post", async function (req, res) {
   if (req.query.isEvent === "true") {
     const result = await userService.getIngEvent();
-    console.log(result);
     res.render("post/addPost", {
       isEvent: req.query.isEvent,
       result: result,
@@ -177,30 +176,9 @@ router.post("/add-review", async function (req, res) {
     res.redirect("/book/book-main");
   }
 });
-// 게시글 등록
-router.post("/add-post", async function (req, res) {
-  const userNum = req.session.user_num;
-  const postInfo = { ...req.body, userNum };
-  console.log(reviewInfo);
-  try {
-    if (req.body) {
-      try {
-        if (req.body) {
-          const result = await userService.insertPost(postInfo);
-          res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
-                  document.location.href="/";</script>`);
-        }
-      } catch (error) {
-        res.redirect("/book/book-main");
-      }
-    }
-  } catch (error) {
-    res.redirect("/book/book-main");
-  }
-});
+
 //로그아웃
 router.get("/logout", function (req, res) {
-  console.log("1");
   req.session.destroy();
   res.redirect("/");
 });
