@@ -6,32 +6,15 @@ const userService = require("../user/userService");
 const couponservice = require("../coupon/couponservice");
 var router = express.Router();
 
-// 이때 json을 order, order book 나누는게 좋음 ex)
-/**
- *
- * {
- *  order{
- *    order_num : 1,
- *    order_name : "name"
- *  }
- *  orderBook[
- *    {
- *      bookNum : 1
- *      bookName : "name"
- *    },
- *    {
- *      bookNum : 2
- *      bookName : "name2"
- *    }
- *  ]
- * }
- */
-
 //주문 정보 입력 페이지로이동
 router.post("/addorder", async function (req, res) {
   const userNum = req.session.user_num;
   const result = await couponservice.getCanUseCoupon(userNum);
+  const card = await orderService.getCard(userNum);
+  const address = await orderService.getAddress(userNum);
   return res.render("order/addorder", {
+    address: address,
+    card: card,
     result: result,
   });
 });
@@ -41,10 +24,21 @@ router.post("/order", async function (req, res) {
   const userNum = req.session.user_num;
   const orderInfo = req.body;
   const couponNum = req.body.own_coupon_num;
+  const addressInfo = await orderService.getAddressDetail(
+    orderInfo.order_zip_code,
+    userNum
+  );
+  const cardInfo = await orderService.getCardPick(userNum, orderInfo.card_id);
+  console.log(cardInfo);
   try {
     if (userNum) {
       const cartBooks = await cartService.getCartBook(req.session.user_num); //책 리스트 전달
-      const order_num = await orderService.insertOrder(orderInfo, userNum);
+      const order_num = await orderService.insertOrder(
+        orderInfo,
+        userNum,
+        addressInfo,
+        cardInfo
+      );
       let order_total = 0;
       for (let index = 0; index < cartBooks.length; index++) {
         order_total += cartBooks[index].book_price;
@@ -67,7 +61,7 @@ router.post("/order", async function (req, res) {
       await cartService.deleteUserBook(req.session.user_num);
 
       res.send(`<script type="text/javascript">alert("주문이 완료되었습니다!");
-      document.location.href="/book/book-main";</script>`);
+      document.location.href="/";</script>`);
     }
   } catch (error) {
     console.log(error);
@@ -88,7 +82,6 @@ router.get("/order_detail", async function (req, res) {
 // 주문 정보 불러오기 장바구니에서 구매
 router.get("/order_list", async function (req, res) {
   const usernum = req.session.user_num;
-  console.log(req.query);
   const orderNums = await orderService.getorderNum(usernum);
 
   let result = [];
@@ -157,12 +150,10 @@ router.get("/order/order_delete", async function (req, res) {
 //     );
 // });
 
-// // 주소 정보 가져오기
-// router.get("/order/card/pick", async function (req, res) {
-//   const userNum = req.session.user_num;
+// 주소 정보 가져오기
+router.get("/order/card/pick", async function (req, res) {
+  const userNum = req.session.user_num;
 
-//     const result = await orderService.getAddressPick(
-//       req.body.addressNum
-//     );
-// });
+  const result = await orderService.getAddressPick(req.body.addressNum);
+});
 module.exports = router;
