@@ -62,7 +62,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query =
-        "SELECT content, createdDate, star_rating FROM review where book_book_num = ?;";
+        "SELECT content ,star_rating, user_name name FROM review left join user on review.user_user_num = user.user_num where review.book_book_num = ?;";
       const [result] = await conn.query(query, [bookNum]);
       conn.release();
       return result;

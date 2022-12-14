@@ -4,6 +4,7 @@ var router = express.Router();
 
 const pool = require("../../config/dbConfig");
 module.exports = {
+  //유저 등록
   insertUser: async (userInfo) => {
     try {
       const { user_name, user_id, user_password, user_phone } = userInfo;
@@ -38,20 +39,7 @@ module.exports = {
       throw error;
     }
   },
-  getUserList: async () => {
-    try {
-      const conn = await pool.getConnection();
-      const query = "SELECT * FROM User;";
-      const [result] = await conn.query(query);
-      conn.release();
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  },
-  updateUser: (userInfo) => {},
-  deleteUser: (userInfo) => {},
-
+  //로그인 할 경우 유저 아이디 조회
   checkUser: async (userInfo) => {
     try {
       console.log(userInfo);
@@ -73,32 +61,30 @@ module.exports = {
       throw error;
     }
   },
+  //card등록
+  insertCard: async (cardInfo, userNum) => {
+    try {
+      const { card_valid_date, card_type, card_id } = cardInfo;
+      const conn = await pool.getConnection();
+      const query = `INSERT INTO User
+            (
+              card_valid_date,
+              card_type,
+              User_user_num,
+              card_id,
+              ) VALUES (
+                    ?,
+                    ?,
+                    ?,
+                    ?
+                );`;
+      const [{ affectRows: result }] = await conn.query(query, [
+        card_valid_date,
+        card_type,
+        userNum,
+        card_id,
+      ]);
 
-  //추천인 확인
-  getRecommendUser: async (userid) => {
-    try {
-      const conn = await pool.getConnection();
-      const query = `
-          SELECT user_num from user
-          WHERE user_id = ?
-        `;
-      const [result] = await conn.query(query, [userid]);
-      conn.release();
-      return result;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  },
-  // UserPoint 받아오기
-  getUserCoupon: async (userNum) => {
-    try {
-      const conn = await pool.getConnection();
-      const query = `
-          SELECT user_point from user
-          WHERE user_num = ?
-        `;
-      const [result] = await conn.query(query, [userNum]);
       conn.release();
       return result;
     } catch (error) {

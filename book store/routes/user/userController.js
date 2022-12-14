@@ -25,6 +25,25 @@ router.post("/sign-up", async function (req, res) {
   }
 });
 
+//카드 등록 페이지
+router.get("/add-card", async function (req, res) {
+  res.render("main/add-card");
+});
+
+//회원가입
+router.post("/add-card", async function (req, res) {
+  try {
+    if (req.body) {
+      const result = await userservice.insertUser(req.body);
+
+      res.send(`<script type="text/javascript">alert("카드 등록이 완료되었습니다!");
+              document.location.href="/user/login";</script>`);
+    }
+  } catch (error) {
+    res.redirect("main/myPage");
+  }
+});
+
 //로그인 GET
 router.get("/login", async function (req, res) {
   res.render("main/login");
@@ -55,7 +74,7 @@ router.post("/login", async function (req, res) {
     document.location.href="/";</script>`);
   }
 });
-//쿠폰목록 가져오기
+//마이페이지 가져오기
 router.get("/myPage", async function (req, res) {
   userNum = req.session.user_num;
   const result = await couponservice.getOwnCoupon(userNum);
