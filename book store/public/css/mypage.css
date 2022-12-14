@@ -167,11 +167,15 @@
     font-size: 18px;
 }
 
-.inquire-btn {
-  outline: none;
-  padding: 2px;
-  margin: 2px;
-  border: 1px solid#ccc;
-  background-color: transparent;
+img {
+    width: 100px;
 }
 
+.review {
+    outline: none;
+    cursor: pointer;
+    margin-left: 5px;
+    padding: 2px ;
+    border: 1px solid #333;
+    background-color: transparent;
+}

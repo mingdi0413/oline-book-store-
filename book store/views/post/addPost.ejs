@@ -2,53 +2,128 @@
 <html lang="ko">
   <head>
     <title>도서 판매 프로그램</title>
-    <link rel="stylesheet" type="text/css" href="./css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="./css/view.css" />
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/addPost.css" rel="stylesheet" type="text/css">
   </head>
-
+  
   <body>
-    <section id="addBook-form">
-      <h3>게시글 작성</h3>
-      <form method="post" action="/user/add-post" >
+      <div id="wrap">
+        <div class="head_top">
+            <div class="info_mn">
+                <ul>
+                    <li><button type="button" onclick="location.href='/cart/cart_list'">
+                        장바구니
+                      </button></li>
+                    <li> <button type="button" onclick="location.href='/order/order_list'">
+                        마이페이지
+                      </button></li>
+                    <li><button type="button">
+                        로그인
+                    </button></li>
+                    <li><button type="button">
+                        회원가입
+                    </button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="head_bottom">
+            <div class="logo"><h1>DSU 서점</h1></div>
+            <div class="search">
+                <form action="/book/book-search" method="post" class="search_in">
+                    <!-- <label>도서 검색</label> -->
+                    <input
+                      type="text"
+                      class="input"
+                      placeholder="검색어를 입력하세요."
+                      id="book_name"
+                      name="book_name"
+                    />
+                    <input type="submit" value="검색" class="btn"/>
+                  </form>
+        </div>
+    </div>
+        <nav class="nav">
+            <ul>
+                <li><button>커뮤니티</button></li>
+                <li><button>베스트 도서</button></li>
+                <li><button>전체도서</button></li>
+                <li><button>공지사항</button></li>
+                <li><button>이벤트</button></li>
+            </ul>
+        </nav>
+    <div class="board_wrap">
+        <div class="board_title">
+            <h3>전체게시판</h3>
+        </div>
+        <div class="board_view_wrap">
+            <div class="board_view">
+                <div class="title">
+                  <form method="post" action="/user/add-post" >
+                  <!-- <label>제목</label> -->
+                  <input
+                    type="text"
+                    class="input"
+                    placeholder="제목 : "
+                    id="title"
+                    name="title"
+                  />
+                </div>
+                <div class="info">
+
+                  <% if(isEvent === 'false'){%>
+                    <label>카테고리</label>
+                    <select name="board_num" class="board_num">
+                      <option value="1">1학년</option>
+                      <option value="2">2학년</option>
+                      <option value="3">3학년</option> 
+                    </select>
+                    <%} else {%>
+                      <input type="hidden" name = "board_num" value="4" class = "board_num">
+                      <label>이벤트 목록</label>
+                    <select name="event_num">
+                      <% for(let i = 0; i < result.length; i++){%>
+                        <option value="<%=result[i].num%>"><%=result[i].name%></option>  
+                      <%}%>
+                    </select>
+                    <%}%>
+                    
+                </div>
+            </div>
+            <div class="board_page">
+              <label>내용</label>
+              <textarea
+              type="text"
+              class="input"
+              placeholder="내용을 입력하세요"
+              id="content"
+              name="content"></textarea>
+            </div>
+            <div class="bt_wrap">
+              <input type="submit" value="등록하기" />
+            </div>
+          </form>
+            <div>
+                <button class="file_add">파일첨부</button>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
+      
         <table>
         
-          <label>제목</label>
-          <input
-            type="text"
-            class="input"
-            placeholder="제목"
-            id="title"
-            name="title"
-          />
+         
           <br>
-          <% if(isEvent === 'false'){%>
-          <label>카테고리</label>
-          <select name="board_num">
-            <option value="1">1학년</option>
-            <option value="2">2학년</option>
-            <option value="3">3학년</option> 
-          </select>
-          <%} else {%>
-            <input type="hidden" name = "board_num" value="4">
-            <label>이벤트 목록</label>
-          <select name="event_num">
-            <% for(let i = 0; i < result.length; i++){%>
-              <option value="<%=result[i].num%>"><%=result[i].name%></option>  
-            <%}%>
-          </select>
-          <%}%>
-          <label>내용</label>
-          <textarea
-          type="text"
-          class="input"
-          placeholder="내용을 입력하세요"
-          id="content"
-          name="content"></textarea>
-          <!-- <label for="image">Image</label>
-          <input type='file' name='upload' /><br> -->
-        </table>
-        <input type="submit" value="등록하기" />
-    </form>
+          
+          
+         
+  
+       
+        
+   
     
       
 </html>
+
+

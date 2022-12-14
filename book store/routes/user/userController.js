@@ -100,10 +100,12 @@ router.post("/login", async function (req, res) {
 });
 //마이페이지 가져오기
 router.get("/myPage", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
   userNum = req.session.user_num;
   const result = await couponservice.getOwnCoupon(userNum);
   return res.render("main/myPage", {
     result: result,
+    is_logined,
   });
 });
 
