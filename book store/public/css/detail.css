@@ -185,8 +185,6 @@
     font-weight: normal;
   }
 
-
-
 #detail-view p {
     float: left;
     font-size: 18px;
@@ -204,5 +202,29 @@
     border: 1px solid #333;
   }
 
+  .grade {
+    margin: 200px auto;
+    width: 1200px;
+    border: 1px solid #ccc;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+  }
 
-  
+  .grade h4 {
+    margin: 5px 0 20px 0;
+    font-size: 25px;
+  }
+
+  .grade  p {
+    font-size: 18px;
+  }
+
+  .grade .avg2 {
+    font-weight: normal;
+  }
+
+ .grade .contet {
+  margin-bottom: 20px;
+ }

@@ -44,6 +44,7 @@
                   </ul>
               </div>
           </div>
+        </div> 
           <div class="head_bottom">
               <div class="logo"><a href="/">DSU서점</a></div>
               <div class="search">
@@ -76,7 +77,6 @@
           </div>
     <section id="detail-form">
       <article id="detail-view">
-        
         <h2 class="head"><span><%= result.book_name %></span></h2>
         <img src="<%=result.img_link%>"/>
         <div id="things">
@@ -89,18 +89,7 @@
           <h2 class="avg">평점
             <span><%=result.average %></span>
           </h2>
-          
         </div>
-          <% for(let i = 0; i < review.length; i++){%>
-          <p class="des">작성자
-            <span><%=review[i].name %></span></p>
-          <p class="author">
-            내용<span><%=review[i].content %></span></p>
-          
-          <h2 class="avg">평점
-            <span><%=review[i].star_rating %></span>
-          </h2>
-          <%}%>
       </article>
 
       <article id="btns">
@@ -133,8 +122,20 @@
           </form>
       </article>
     </section>
+    <section>
+      <div class="grade">
+        <h4>리뷰</h4>
+        <% for(let i = 0; i < review.length; i++){%>
+          <p class="writer">작성자 : 
+            <span><%=review[i].name %></span></p>
 
-  </div>
+          <p class="contet">
+            내용 : <span><%=review[i].content %></span> &nbsp;&nbsp;
+            평점<span><%=review[i].star_rating %></span>
+          </p>
+          <%}%>
+      </div>
+      </section>
 </div>
   </body>
 </html>
