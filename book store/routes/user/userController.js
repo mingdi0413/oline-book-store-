@@ -126,7 +126,7 @@ router.get("/detail/:category", async function (req, res) {
     return res.render("post/boardDetail", {
       is_logined,
       board: board,
-      result: resul2.map(item => {
+      result: result2.map(item => {
         return ({...item,createdAt : dateFormat(item.createdAt)})
       }),
     });
