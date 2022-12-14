@@ -29,6 +29,35 @@ module.exports = {
       throw error;
     }
   },
+  //이벤트 등록
+  insertEvent: async (eventInfo) => {
+    try {
+      const { name, content, start_Date } = eventInfo;
+      const conn = await pool.getConnection();
+      const query = `INSERT INTO event
+            (
+              name,
+              content,
+              start_Date,
+              end_Date
+                ) VALUES (
+                    ?,
+                    ?,
+                    ?,
+                    DATE_ADD(start_Date, INTERVAL 15 DAY)
+                );`;
+      const [{ affectRows: result }] = await conn.query(query, [
+        name,
+        content,
+        start_Date,
+      ]);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
   // 쿠폰 부여하기
   giveCoupon: async (couponInfo) => {
     try {

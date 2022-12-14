@@ -48,7 +48,6 @@
               <div class="logo"><a href="/">DSU서점</a></div>
               <div class="search">
                   <form action="/book/book-search" method="post" class="search_in">
-                      <!-- <label>도서 검색</label> -->
                       <input
                         type="text"
                         class="input"
@@ -92,6 +91,16 @@
           </h2>
           
         </div>
+          <% for(let i = 0; i < review.length; i++){%>
+          <p class="des">작성자
+            <span><%=review[i].name %></span></p>
+          <p class="author">
+            내용<span><%=review[i].content %></span></p>
+          
+          <h2 class="avg">평점
+            <span><%=review[i].star_rating %></span>
+          </h2>
+          <%}%>
       </article>
 
       <article id="btns">

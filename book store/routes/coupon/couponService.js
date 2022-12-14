@@ -102,9 +102,9 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query = `
-          SELECT num from own_coupon where coupon_num = 3
+      SELECT own_coupon.num from own_coupon left join coupon on coupon.num = own_coupon.coupon_num where coupon.type = 1
           `;
-      const [[result]] = await conn.query(query);
+      const [result] = await conn.query(query);
       conn.release();
       return result;
     } catch (error) {
