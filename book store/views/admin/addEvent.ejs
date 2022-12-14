@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>도서 판매 프로그램</title>
+  </head>
+
+  <body>
+    <section id="addEvent-form">
+      <h1>이벤트 추가</h1>
+      <form method="post" action="./addEvent">
+        <table>
+          <label>이벤트 이름</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="이벤트 이름"
+            id="name"
+            name="name"
+          />
+          <label>이벤트 내용</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="이벤트 내용"
+            id="content"
+            name="content"
+          />
+          <label>시작일</label>
+          <input
+            type="text"
+            class="input"
+            placeholder="시작일"
+            id="start_Date"
+            name="start_Date"
+          />
+          
+        </table>
+        <input type="submit" value="이벤트 등록" />
+      </form>
+      
+</html>

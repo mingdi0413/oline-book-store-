@@ -5,8 +5,8 @@ const bookservice = require("./bookService");
 const orderService = require("../order/orderService");
 const sequelize = require("sequelize");
 const couponService = require("../coupon/couponService");
+const { or } = require("sequelize");
 const Op = require("sequelize").Op;
-
 
 // 책 등록 GET
 router.get("/addBook", async function (req, res) {
@@ -45,8 +45,10 @@ router.get("/detail/:bookname", async function (req, res) {
     "SELECT * FROM book WHERE book_name = '" + req.params.bookname + "'"
   );
   let result = await bookservice.getBookRating(arr.book_num);
-  console.log(result);
+  let review = await bookservice.getBookReview(arr.book_num);
+  console.log(review);
   return res.render("book/detail", {
+    review: review,
     is_logined,
     result: result,
   });
@@ -71,18 +73,31 @@ router.get("/bookList", async function (req, res) {
 });
 //이벤트 당첨자 주문목록 조회(*메인 기능)
 router.get("/EliteSeller", async function (req, res) {
-  const couponNum = await couponService.getEventCouponNum();
-  const orderNum = await bookservice.getEliteOrderNum(couponNum.num);
-  const bookNum = await bookservice.getEliteSeller(orderNum.order_num);
   let result = [];
-  for (let i = 0; i < bookNum.length; i++) {
-    result.push(await bookservice.getBookForNum(bookNum[i].book_book_num));
+  let orderNum = [];
+  let list = [];
+  let temp;
+  //이벤트 쿠폰 보유자 찾기
+  const userNums = await bookservice.getEliteUserNum();
+  for (let i = 0; i < userNums.length; i++) {
+    list.push(userNums[i].user_user_num);
   }
+  // 이벤틑 쿠폰 보유자들의 주문 번호 찾기
+  for (let i = 0; i < list.length; i++) {
+    temp = await bookservice.getEliteOrderNum(userNums[i].user_user_num);
+    if (temp != null) {
+      orderNum.push(temp);
+    }
+  }
+  let bookorderNum = await bookservice.getEliteSeller(orderNum[i].order_num);
+  console.log(bookorderNum);
+  result.push(await bookservice.getEliteSeller(orderNum[i].order_num));
+
   return res.render("book/eliteSeller", {
     result: result,
   });
 });
-//이벤트 당첨자 주문목록 조회(*메인 기능)
+//이벤트 당첨자 쿠폰 사용 주문목록 조회(*메인 기능)
 router.get("/eventCouponSeller", async function (req, res) {
   const bookOrder = await bookservice.getEliteCouponSeller();
   let result = [];

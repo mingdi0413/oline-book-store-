@@ -2,6 +2,7 @@ var express = require("express");
 
 var router = express.Router();
 const adminservice = require("./adminService");
+const bookservice = require("../book/bookService");
 
 // 책 등록 GET
 router.get("/addBook", async function (req, res) {
@@ -14,32 +15,11 @@ router.post("/addBook", async function (req, res) {
     if (req.body) {
       const result = await bookservice.insertBook(req.body);
       res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
-              document.location.href="/";</script>`);
+              document.location.href="/user/login";</script>`);
     }
   } catch (error) {
     res.redirect("book/addBook");
   }
-});
-
-//도서 조회
-router.get("/book-main", async function (req, res) {
-  const [result] = await pool.query("SELECT * FROM book ");
-
-  return res.render("book/book-main", {
-    result: result,
-  });
-});
-
-//도서 검색
-router.post("/book-search", async function (req, res) {
-  const search_title = req.body.book_name; //검색어
-  const [result] = await pool.query(
-    "SELECT * FROM book WHERE book_name LIKE '%" + search_title + "%'"
-  );
-
-  return res.render("book/book-search", {
-    result: result,
-  });
 });
 
 // 쿠폰 부여 GET
@@ -52,11 +32,28 @@ router.post("/giveCoupon", async function (req, res) {
     if (req.body) {
       const result = await adminservice.giveCoupon(req.body);
       res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
-                  document.location.href="/";</script>`);
+                  document.location.href="/admin";</script>`);
     }
   } catch (error) {
     res.redirect("coupon/addCoupon");
   }
 });
 
+// 이벤트 등록 GET
+router.get("/addEvent", async function (req, res) {
+  res.render("admin/addEvent");
+});
+
+//이벤트 등록 POST
+router.post("/addEvent", async function (req, res) {
+  try {
+    if (req.body) {
+      const result = await adminservice.insertEvent(req.body);
+      res.send(`<script type="text/javascript">alert("등록이 완료되었습니다!");
+              document.location.href="/admin/admin";</script>`);
+    }
+  } catch (error) {
+    res.redirect("admin/admin");
+  }
+});
 module.exports = router;

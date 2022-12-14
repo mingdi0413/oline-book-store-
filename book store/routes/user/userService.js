@@ -66,12 +66,12 @@ module.exports = {
     try {
       const { card_valid_date, card_type, card_id } = cardInfo;
       const conn = await pool.getConnection();
-      const query = `INSERT INTO User
+      const query = `INSERT INTO Card
             (
               card_valid_date,
               card_type,
               User_user_num,
-              card_id,
+              card_id
               ) VALUES (
                     ?,
                     ?,
@@ -83,6 +83,37 @@ module.exports = {
         card_type,
         userNum,
         card_id,
+      ]);
+
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+  //주소 등록
+  insertAddress: async (addressInfo, userNum) => {
+    try {
+      const { zip_code, default_address, detail_address } = addressInfo;
+      const conn = await pool.getConnection();
+      const query = `INSERT INTO address
+            (
+              zip_code,
+              default_address,
+              detail_address,
+              User_user_num
+              ) VALUES (
+                    ?,
+                    ?,
+                    ?,
+                    ?
+                );`;
+      const [{ affectRows: result }] = await conn.query(query, [
+        zip_code,
+        default_address,
+        detail_address,
+        userNum,
       ]);
 
       conn.release();
@@ -165,7 +196,10 @@ module.exports = {
     }
   },
   //게시글 작성
-  insertPost: async ({ title, content, userNum, board_num, event_num }) => {
+  insertPost: async (
+    { title, content, userNum, board_num, event_num },
+    image
+  ) => {
     try {
       const conn = await pool.getConnection();
       const query = `INSERT INTO post
@@ -175,11 +209,13 @@ module.exports = {
                 createdAt,
                 user_user_num,
                 board_num,
-                event_num
+                event_num,
+                img_link
                 ) VALUES (
                       ?,
                       ?,
                       NOW(),
+                      ?,
                       ?,
                       ?,
                       ?
@@ -190,6 +226,7 @@ module.exports = {
         userNum,
         board_num,
         event_num,
+        image,
       ]);
       conn.release();
       return result;

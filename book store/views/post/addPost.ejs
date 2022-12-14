@@ -9,7 +9,7 @@
   <body>
     <section id="addBook-form">
       <h3>게시글 작성</h3>
-      <form method="post" action="/user/add-post">
+      <form method="post" action="/user/add-post" >
         <table>
         
           <label>제목</label>
@@ -44,9 +44,11 @@
           placeholder="내용을 입력하세요"
           id="content"
           name="content"></textarea>
-          
+          <label for="image">Image</label>
+          <input type='file' name='upload' /><br>
         </table>
         <input type="submit" value="등록하기" />
-      </form>
+    </form>
+    
       
 </html>

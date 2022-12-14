@@ -96,12 +96,26 @@ module.exports = {
       throw error;
     }
   },
-  //이벤트 당첨자들의 주문번호 가져오기
-  getEliteOrderNum: async (couponNum) => {
+  //이벤트 당첨자들의 유저번호 가져오기
+  getEliteUserNum: async () => {
     try {
       const conn = await pool.getConnection();
-      const query = "SELECT order_num FROM orders where own_coupon_num = ?;";
-      const [[result]] = await conn.query(query, [couponNum]);
+      const query =
+        "SELECT user_user_num FROM own_coupon left join coupon on coupon.num = own_coupon.coupon_num where coupon.type = 1;";
+      const [result] = await conn.query(query);
+      conn.release();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  //이벤트 당첨자들의 주문번호 가져오기
+  getEliteOrderNum: async (userNum) => {
+    try {
+      const conn = await pool.getConnection();
+      const query = "SELECT order_num FROM orders where user_user_num = ?;";
+      const [[result]] = await conn.query(query, [userNum]);
       conn.release();
       return result;
     } catch (error) {
@@ -126,7 +140,20 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query =
-        "select * from book_order where order_order_num in (select order_num from orders where own_coupon_num in(select num from own_coupon where coupon_num=3));";
+        "select * from book_order where order_order_num in (select order_num from orders where own_coupon_num in(SELECT own_coupon.num from own_coupon left join coupon on coupon.num = own_coupon.coupon_num where coupon.type = 1));";
+      const [result] = await conn.query(query);
+      conn.release();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+   //이벤트 당첨자들의 주문목록
+   getEliteCouponSeller: async () => {
+    try {
+      const conn = await pool.getConnection();
+      const query =
+        "select * from book_order where order_order_num in (select order_num from orders where own_coupon_num in(SELECT own_coupon.num from own_coupon left join coupon on coupon.num = own_coupon.coupon_num where coupon.type = 1));";
       const [result] = await conn.query(query);
       conn.release();
       return result;
@@ -135,3 +162,4 @@ module.exports = {
     }
   },
 };
+select * from book where book_num 
