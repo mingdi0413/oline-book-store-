@@ -43,7 +43,9 @@ router.get("/detail/:bookname", async function (req, res) {
     "SELECT * FROM book WHERE book_name = '" + req.params.bookname + "'"
   );
   let result = await bookservice.getBookRating(arr.book_num);
+  const review = await bookservice.getBookReview(arr.book_num);
   return res.render("book/detail", {
+    review: review,
     result: result,
   });
 });
