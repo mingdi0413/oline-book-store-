@@ -109,7 +109,7 @@ module.exports = {
       throw error;
     }
   },
-  
+
   //이벤트 당첨자들의 주문번호 가져오기
   getEliteOrderNum: async (userNum) => {
     try {
@@ -123,12 +123,12 @@ module.exports = {
     }
   },
   //이벤트 당첨자들의 주문목록
-  getEliteSeller: async (orderNum) => {
+  getEliteSeller: async () => {
     try {
       const conn = await pool.getConnection();
       const query =
-        "SELECT book_book_num FROM book_order where order_order_num = ?;";
-      const [result] = await conn.query(query, [orderNum]);
+        "SELECT* from book where book_num in(SELECT DISTINCT book_book_num FROM book_order where order_order_num in(SELECT order_num FROM orders where user_user_num in(SELECT user_user_num FROM own_coupon left join coupon on coupon.num = own_coupon.coupon_num where coupon.type = 1)));";
+      const [result] = await conn.query(query);
       conn.release();
       return result;
     } catch (error) {
@@ -140,20 +140,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query =
-        "select * from book_order where order_order_num in (select order_num from orders where own_coupon_num in(SELECT own_coupon.num from own_coupon left join coupon on coupon.num = own_coupon.coupon_num where coupon.type = 1));";
-      const [result] = await conn.query(query);
-      conn.release();
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  },
-   //이벤트 당첨자들의 주문목록
-   getEliteCouponSeller: async () => {
-    try {
-      const conn = await pool.getConnection();
-      const query =
-        "select * from book_order where order_order_num in (select order_num from orders where own_coupon_num in(SELECT own_coupon.num from own_coupon left join coupon on coupon.num = own_coupon.coupon_num where coupon.type = 1));";
+        "select * from book_order where order_order_num in (select order_num from orders where own_coupon_num in(select num from own_coupon where coupon_num=1));";
       const [result] = await conn.query(query);
       conn.release();
       return result;
@@ -162,4 +149,3 @@ module.exports = {
     }
   },
 };
-select * from book where book_num 
