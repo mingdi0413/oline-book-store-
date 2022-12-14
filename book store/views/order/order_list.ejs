@@ -1,41 +1,104 @@
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>도서 판매 프로그램</title>
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/order-list.css" rel="stylesheet" type="text/css">
   </head>
-  <body>
-    <h1>
-      <div style="text-align: center">Oline Book Store</div>
-    </h1>
-    <section id="read-form">
-      <h2><div style="text-align: center">회원님의 주문내역</div></h2>
-      <button type="button" onclick="location.href='/user/myPage'">
-        마이페이지
-      </button>
-      <button type="button" onclick="location.href='/cart/cart_list'">
-        내 장바구니
-      </button>
-      <input type="button" value="메인 화면" onClick="location.href='/'" />
 
+  <body>
+    <div id="wrap">
+      <div id="header">
+          <div class="head_top">
+              <div class="info_mn">
+                  <ul>
+                      <li><button type="button" onclick="location.href='/cart/cart_list'">
+                        장바구니
+                        </button></li>
+                      <li><button type="button" onclick="location.href='/order/order_list'">
+                        주문목록
+                        </button></li>
+                      <li>
+                        <% if(is_logined === false){%>
+                          <button type="button" onclick="location.href='/user/login'">
+                            로그인
+                          </button>
+                      </li>
+                      <li>
+                        <button type="button" onclick="location.href='/user/sign-up'">
+                          회원가입
+                        </button>
+                      </li>
+                      <li>
+                        <%}else{%>
+                        <button type="button" onclick="location.href='/user/myPage'">
+                          마이페이지
+                        </button>
+                        </li>
+                        <li>
+                        <button type="button" onclick="location.href='/user/logout'">
+                          로그아웃
+                        </button>
+                        <%}%>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="head_bottom">
+              <div class="logo"><a href="/">DSU서점</a></div>
+              <div class="search">
+                  <form action="/book/book-search" method="post" class="search_in">
+                      <!-- <label>도서 검색</label> -->
+                      <input
+                        type="text"
+                        class="input"
+                        placeholder="검색어를 입력하세요."
+                        id="book_name"
+                        name="book_name"
+                      />
+                      <input type="submit" value="검색" class="btn"/>
+                    </form>
+              </div>
+              <nav class="nav">
+                  <ul>
+                      <li><button type="button" onclick="location.href='/book/bestSeller'">
+                        베스트셀러
+                      </button></li>
+                      <li><button type="button" onclick="location.href='/book/eliteSeller'">
+                        ElitePick
+                      </button></li>
+                      <li> <button type="button" onclick="location.href='/user/community'">
+                        커뮤니티
+                      </button></li>
+                      <li><button type="button" onclick="location.href='/book/bookList'">도서 목록</button></li>
+                      <li><button>이벤트</button></li>
+                  </ul>
+              </nav>
+          </div>
+          <section id="read-form">
+      <h2><div style="text-align: center">회원님의 주문내역</div></h2>
+      
       <table id="read-table">
         <thead>
           <tr id="field">
+            <th>주문번호</th>
             <th>주문 날짜</th>
             <th>주문 총액</th>
             <th>배송지</th>
+            <th>상세주소</th>
           </tr>
         </thead>
         <tbody>
           <% for(let i = 0; i < result.length; i++){%>
-          <tr>
+          <tr class="txt1">
+            <td><%=(i+1)%></td>
             <td><%=result[i].order_date%></td>
 
             <td><%=result[i].order_total%></td>
 
             <td><%=result[i].order_default_address%></td>
+            <td><%=result[i].order_detail_address%></td>
             <td>
               <input
                 type="button"

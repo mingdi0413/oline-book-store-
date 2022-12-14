@@ -6,9 +6,9 @@ const port = 3036;
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
 
-app.use("/static", express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use("/static", express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

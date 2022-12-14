@@ -82,37 +82,52 @@ router.get("/myPage", async function (req, res) {
     result: result,
   });
 });
+
+const dateFormat = day => {
+  const str = new Date(day);
+  return [str.getFullYear() ,str.getMonth() , str.getDate()].join("-");
+}
+
 //커뮤니티 GET
 router.get("/community", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
+  var moment = require('moment');
   const board = await userService.getAllBoard();
   const result = await userService.getAllPost();
   return res.render("post/community", {
+    momment:moment,
+    is_logined,
     board: board,
-    result: result,
+    result: result.map(item => {
+      return ({...item,createdAt : dateFormat(item.createdAt)})
+    }),
   });
 });
 //게시글 상세정보
 router.get("/post/:postTitle", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
   const postTitle = req.params.postTitle;
-  console.log(postTitle);
   const [result] = await userService.getPostDetail(postTitle);
-  console.log(result);
   return res.render("post/detail", {
+    is_logined,
     result: result,
   });
 });
-//게시글 상세정보
+//좋아요 기능
 router.post("/post/:postTitle", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
   const postTitle = req.params.postTitle;
   const [result] = await userService.getPostDetail(postTitle);
 
   await userService.addPostRecommend(result.num);
   return res.render("post/detail", {
+    is_logined,
     result: result,
   });
 });
 //게시판 분류
 router.get("/detail/:category", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
   const board = await userService.getAllBoard();
   const category = req.params.category;
   const [{ num: boardNum }] = await userService.getBoardNum(category);
@@ -128,13 +143,19 @@ router.get("/detail/:category", async function (req, res) {
       }
     }
     return res.render("post/boardDetail", {
+      is_logined,
       board: board,
-      result: result2,
+      result: result2.map(item => {
+        return ({...item,createdAt : dateFormat(item.createdAt)})
+      }),
     });
   } else {
     return res.render("post/boardDetail", {
+      is_logined,
       board: board,
-      result: result,
+      result: result.map(item => {
+        return ({...item,createdAt : dateFormat(item.createdAt)})
+      }),
     });
   }
 });

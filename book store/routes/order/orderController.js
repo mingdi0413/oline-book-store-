@@ -6,6 +6,11 @@ const userService = require("../user/userService");
 const couponservice = require("../coupon/couponservice");
 var router = express.Router();
 
+const dateFormat = day => {
+  const str = new Date(day);
+  return [str.getFullYear() ,str.getMonth() , str.getDate()].join("-");
+}
+
 //주문 정보 입력 페이지로이동
 router.post("/addorder", async function (req, res) {
   const userNum = req.session.user_num;
@@ -72,15 +77,21 @@ router.post("/order", async function (req, res) {
 // 주문 상세정보 불러오기
 router.get("/order_detail", async function (req, res) {
   const order_num = req.query.order_num;
+  const is_logined = req.session.user_num === undefined ? false : true;
   const result = await orderService.getOrderDetail(order_num);
 
   return res.render("order/order_detail", {
-    result: result,
+    is_logined,
+    result: result.map(item => {
+      
+      return ({...item,order_date : dateFormat(item.order_date)})
+    }),
   });
 });
 
 // 주문 정보 불러오기 장바구니에서 구매
 router.get("/order_list", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
   const usernum = req.session.user_num;
   const orderNums = await orderService.getorderNum(usernum);
 
@@ -89,7 +100,10 @@ router.get("/order_list", async function (req, res) {
     result.push(await orderService.getOrder(orderNums[i].order_num));
   }
   return res.render("order/order_list", {
-    result: result,
+    is_logined,
+    result: result.map(item => {
+      return ({...item,order_date : dateFormat(item.order_date)})
+    }),
   });
 });
 

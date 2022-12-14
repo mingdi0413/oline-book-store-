@@ -1,40 +1,100 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>도서 판매 프로그램</title>
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/cart-list.css" rel="stylesheet" type="text/css">
   </head>
+
   <body>
-    <h1>
-      <div style="text-align: center">Oline Book Store</div>
-    </h1>
+    <div id="wrap">
+      <div id="header">
+          <div class="head_top">
+              <div class="info_mn">
+                  <ul>
+                      <li><button type="button" onclick="location.href='/cart/cart_list'">
+                        장바구니
+                        </button></li>
+                      <li><button type="button" onclick="location.href='/order/order_list'">
+                        주문목록
+                        </button></li>
+                      <li>
+                        <% if(is_logined === false){%>
+                          <button type="button" onclick="location.href='/user/login'">
+                            로그인
+                          </button>
+                      </li>
+                      <li>
+                        <button type="button" onclick="location.href='/user/sign-up'">
+                          회원가입
+                        </button>
+                      </li>
+                      <li>
+                        <%}else{%>
+                        <button type="button" onclick="location.href='/user/myPage'">
+                          마이페이지
+                        </button>
+                        </li>
+                        <li>
+                        <button type="button" onclick="location.href='/user/logout'">
+                          로그아웃
+                        </button>
+                        <%}%>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+        </div>  
+          <div class="head_bottom">
+              <div class="logo"><a href="/">DSU서점</a></div>
+              <div class="search">
+                  <form action="/book/book-search" method="post" class="search_in">
+                      <!-- <label>도서 검색</label> -->
+                      <input
+                        type="text"
+                        class="input"
+                        placeholder="검색어를 입력하세요."
+                        id="book_name"
+                        name="book_name"
+                      />
+                      <input type="submit" value="검색" class="btn"/>
+                    </form>
+              </div>
+              <nav class="nav">
+                  <ul>
+                      <li><button type="button" onclick="location.href='/book/bestSeller'">
+                        베스트셀러
+                      </button></li>
+                      <li><button type="button" onclick="location.href='/book/eliteSeller'">
+                        ElitePick
+                      </button></li>
+                      <li> <button type="button" onclick="location.href='/user/community'">
+                        커뮤니티
+                      </button></li>
+                      <li><button type="button" onclick="location.href='/book/bookList'">
+                        도서 목록</button></li>
+                      <li><button>이벤트</button></li>
+                  </ul>
+              </nav>
+          </div>
+ 
     <section id="read-form">
       <h2><div style="text-align: center">회원님의 장바구니</div></h2>
       <table id="read-table">
         <thead>
           <tr id="field">
+            <th>상품</th>
             <th>제목</th>
             <th>가격</th>
-            <th>작가</th>
             <th>삭제</th>
           </tr>
         </thead>
-        <input
-          type="button"
-          value="메인 화면"
-          onClick="location.href='/book/book-main'"
-        />
-
-        <tbody>
           <form method="post" action="/order/addorder">
-            <input type="submit" value="주문하기" />
             <% for(let i = 0; i < result.length; i++){%>
-            <tr>
+            <tr class="txt1">
+              <td><img src="<%=result[i].img_link%>"/></td>
               <td><%=result[i].book_name%></td>
               <td><%=result[i].book_price%></td>
-              <td><%=result[i].book_author%></td>
               <td>
                 <a href="cart/book_delete?cart_num=<%=result[i].cart_num%>"
                   >삭제</a
@@ -42,9 +102,11 @@
               </td>
             </tr>
             <%}%>
+            <input type="submit" value="주문하기" class="order_btn"/>
           </form>
         </tbody>
       </table>
+     
     </section>
   </body>
 </html>

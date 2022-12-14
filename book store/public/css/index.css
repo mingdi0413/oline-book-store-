@@ -48,14 +48,14 @@
 }
 .head_bottom {
   width: 100%;
-  height: 100px;
 }
 .head_bottom .logo {
   float: left;
   width: 300px;
-  height: 100px;
-  line-height: 100px;
+  height: 60px;
+  line-height: 80px;
   text-align: center;
+  font-size: 30px;
 }
 
 /*검색 버튼*/
@@ -63,11 +63,10 @@
   margin: 0 auto;
   width: 700px;
   height: 60px;
-  position: relative;
-  top: 20px;
   opacity: 0.5;
   border-bottom: 3px solid #333;
-  background-color: #fff;
+  background-color:#fff;
+  margin-bottom: 20px;
 }
 .search:hover {
   opacity: 1;
@@ -80,7 +79,8 @@
 
 .input {
   width: 600px;
-  height: 50px;
+  height: 54px;
+  line-height: 50px;
   position: relative;
   top: 5px;
   outline: none;
@@ -101,12 +101,6 @@
   background-color: #fff;
 }
 
-.contents1 {
-  width: 100%;
-  height: 600px;
-  border-bottom: 3px solid #333;
-}
-
 .nav {
   width: 100%;
   height: 50px;
@@ -115,15 +109,15 @@
 }
 .nav ul {
   width: 100%;
-  height: 70px;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-around;
+  align-items: center;
 }
 
 .nav ul li {
-  margin-top: -20px;
   height: 25px;
+  margin-top: 14px;
   border-right: 1px solid #333;
   padding-right: 130px;
 }
@@ -148,6 +142,12 @@ button {
   border: none;
 }
 
+.contents1 {
+  width: 100%;
+  height: 600px;
+  border-bottom: 3px solid #333;
+}
+
 .contents1 h2 {
   text-align: center;
   padding-top: 80px;
@@ -165,11 +165,27 @@ button {
 
 .txt_box2 p {
   line-height: 30px;
+} 
+
+.txt_box2 b {
+  margin-right: 15px;
+}
+.event_btn {
+  position: relative;
+  top: 80px;
+  left: 860px;
+  width: 140px;
+  height: 50px;
+  border: 1px solid #333;
+  color: #333;
 }
 
 /* 팝업창 */
 .popup {
   text-align: center;
+  position: absolute;
+  top: 30px;
+  left: 160px;
 }
 
 .pull-right {
@@ -218,34 +234,33 @@ button {
 
 .contents2 {
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  
 }
 
 .con2_box1 {
-  width: 50%;
-}
-
-.con2_box2 {
-  width: 50%;
+  margin: 0 auto;
+  width: 1500px;
+  
 }
 
 .contents2 h3 {
-  font-size: 20px;
+  font-size: 30px;
   margin: 25px 12px;
 }
 
 .contents2 ul {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
 }
 
 .contents2 ul li {
+  float: left;
+  width: 200px;
+  height: 300px;
+  margin-left: 30px;
   margin-bottom: 30px;
+  background-color: rebeccapurple;
 }
+
 
 .contents2 img {
   width: 200px;

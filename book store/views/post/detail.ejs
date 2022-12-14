@@ -2,29 +2,98 @@
 <html lang="ko">
   <head>
     <title>도서 판매 프로그램</title>
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/post-detail.css" rel="stylesheet" type="text/css">
   </head>
 
   <body>
+    <div id="wrap">
+      <div id="header">
+          <div class="head_top">
+              <div class="info_mn">
+                  <ul>
+                      <li><button type="button" onclick="location.href='/cart/cart_list'">
+                        장바구니
+                        </button></li>
+                      <li><button type="button" onclick="location.href='/order/order_list'">
+                        주문목록
+                        </button></li>
+                      <li>
+                        <% if(is_logined === false){%>
+                          <button type="button" onclick="location.href='/user/login'">
+                            로그인
+                          </button>
+                      </li>
+                      <li>
+                        <button type="button" onclick="location.href='/user/sign-up'">
+                          회원가입
+                        </button>
+                      </li>
+                      <li>
+                        <%}else{%>
+                        <button type="button" onclick="location.href='/user/myPage'">
+                          마이페이지
+                        </button>
+                        </li>
+                        <li>
+                        <button type="button" onclick="location.href='/user/logout'">
+                          로그아웃
+                        </button>
+                        <%}%>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="head_bottom">
+              <div class="logo"><a href="/">DSU서점</a></div>
+              <div class="search">
+                  <form action="/book/book-search" method="post" class="search_in">
+                      <!-- <label>도서 검색</label> -->
+                      <input
+                        type="text"
+                        class="input"
+                        placeholder="검색어를 입력하세요."
+                        id="book_name"
+                        name="book_name"
+                      />
+                      <input type="submit" value="검색" class="btn"/>
+                    </form>
+              </div>
+              <nav class="nav">
+                  <ul>
+                      <li><button type="button" onclick="location.href='/book/bestSeller'">
+                        베스트셀러
+                      </button></li>
+                      <li><button type="button" onclick="location.href='/book/eliteSeller'">
+                        ElitePick
+                      </button></li>
+                      <li> <button type="button" onclick="location.href='/user/community'">
+                        커뮤니티
+                      </button></li>
+                      <li><button type="button" onclick="location.href='/book/bookList'">도서 목록</button></li>
+                      <li><button>이벤트</button></li>
+                  </ul>
+              </nav>
+          </div>
+
     <section id="detail-form">
       <article id="detail-view">
-        <h2>제목</h2>
-        <span><%= result.title %></span>
-        <h2>내용</h2>
-        <span><%=result.content %></span>
-
-        <div id="things">
-          <h2>작성자</h2>
-          <span><%=result.name %></span>
+        <!-- <h2>제목</h2> -->
+        <span class="tit"><%= result.title %></span>
+        <h2 class="username">작성자 :
+          <span><%=result.name %></span></h2>
+        <!-- <h2>내용</h2> -->
+        <span class="cont"><%=result.content %></span>
+      
+          <div class="like">
+            <article id="btns">
+              <form action="/user/post/<%= result.title %>" method="post">
+                <input type="submit" value="추천하기" class="heart"/>
+              </form>
+            </article>
           <h2>좋아요</h2>
           <span><%=result.recommended %></span>
-        </div>
-      </article>
-
-      <article id="btns">
-        <input type="button" value="이전 페이지" onClick="history.go(-1)" />
-        <form action="/user/post/<%= result.title %>" method="post">
-          <input type="submit" value="추천하기" />
-        </form>
+          </div>
       </article>
     </section>
   </body>

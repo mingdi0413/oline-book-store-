@@ -7,6 +7,7 @@ const sequelize = require("sequelize");
 const couponService = require("../coupon/couponService");
 const Op = require("sequelize").Op;
 
+
 // 책 등록 GET
 router.get("/addBook", async function (req, res) {
   res.render("book/addBook");
@@ -39,24 +40,35 @@ router.post("/book-search", async function (req, res) {
 
 //도서 상세정보
 router.get("/detail/:bookname", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
   const [[arr]] = await pool.query(
     "SELECT * FROM book WHERE book_name = '" + req.params.bookname + "'"
   );
   let result = await bookservice.getBookRating(arr.book_num);
-  const review = await bookservice.getBookReview(arr.book_num);
+  console.log(result);
   return res.render("book/detail", {
-    review: review,
+    is_logined,
     result: result,
   });
 });
 //베스트 셀러 조회
 router.get("/bestSeller", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
   const result = await bookservice.getBestSeller();
   return res.render("book/bestSeller", {
+    is_logined,
     result: result,
   });
 });
-
+//도서 전체 조회
+router.get("/bookList", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
+  const result = await bookservice.getBookList();
+  return res.render("book/bookList", {
+    is_logined,
+    result: result,
+  });
+});
 //이벤트 당첨자 주문목록 조회(*메인 기능)
 router.get("/EliteSeller", async function (req, res) {
   const couponNum = await couponService.getEventCouponNum();

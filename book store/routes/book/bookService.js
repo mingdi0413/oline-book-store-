@@ -33,6 +33,18 @@ module.exports = {
       throw error;
     }
   },
+  //도서 전체 조회
+  getBookList: async () => {
+    try {
+      const conn = await pool.getConnection();
+      const query = "SELECT * FROM book;";
+      const [result] = await conn.query(query);
+      conn.release();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
   //도서번호로 도서 조회
   getBookForNum: async (bookNum) => {
     try {
@@ -63,7 +75,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query =
-        "SELECT book_num,book_name,book_price,book_author,rating.average FROM book left join (select book_book_num, avg(star_rating) average from review)rating on book.book_num = rating.book_book_num where book.book_num = ?;";
+        "SELECT img_link,book_num,description,book_name,book_price,book_author,rating.average FROM book left join (select book_book_num, avg(star_rating) average from review)rating on book.book_num = rating.book_book_num where book.book_num = ?;";
       const [[result]] = await conn.query(query, [bookNum]);
       conn.release();
       return result;
@@ -76,7 +88,7 @@ module.exports = {
   getBestSeller: async () => {
     try {
       const conn = await pool.getConnection();
-      const query = "SELECT * FROM book ORDER BY sell_count desc limit 5;";
+      const query = "SELECT * FROM book ORDER BY sell_count desc limit 12;";
       const [result] = await conn.query(query);
       conn.release();
       return result;

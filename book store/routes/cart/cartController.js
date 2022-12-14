@@ -9,6 +9,7 @@ const FileStore = require("session-file-store")(session);
 // 장바구니 책 조회
 router.get("/cart_list", async function (req, res) {
   let cart_total = 0;
+  const is_logined = req.session.user_num === undefined ? false : true;
   const result = await cartService.getCartBook(req.session.user_num); //책 리스트 전달
 
   for (let index = 0; index < result.length; index++) {
@@ -16,12 +17,14 @@ router.get("/cart_list", async function (req, res) {
   }
   await cartService.plusCart(cart_total, req.session.user_num);
   return res.render("cart/cart_list", {
+    is_logined,
     result: result,
   });
 });
 
 // 장바구니 책 등록 ( 장바구니 번호와 책번호 요청)
 router.post("/cart/book_add", async function (req, res) {
+  console.log(req.body);
   try {
     if (req.body) {
       try {
