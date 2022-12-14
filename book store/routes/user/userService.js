@@ -196,10 +196,7 @@ module.exports = {
     }
   },
   //게시글 작성
-  insertPost: async (
-    { title, content, userNum, board_num, event_num },
-    image
-  ) => {
+  insertPost: async ({ title, content, userNum, board_num, event_num }) => {
     try {
       const conn = await pool.getConnection();
       const query = `INSERT INTO post
@@ -209,16 +206,16 @@ module.exports = {
                 createdAt,
                 user_user_num,
                 board_num,
-                event_num,
-                img_link
+                event_num
+            
                 ) VALUES (
                       ?,
                       ?,
                       NOW(),
                       ?,
                       ?,
-                      ?,
                       ?
+                      
                   );`;
       const [{ affectRows: result }] = await conn.query(query, [
         title,
@@ -226,7 +223,6 @@ module.exports = {
         userNum,
         board_num,
         event_num,
-        image,
       ]);
       conn.release();
       return result;

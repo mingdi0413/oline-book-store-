@@ -73,26 +73,8 @@ router.get("/bookList", async function (req, res) {
 });
 //이벤트 당첨자 주문목록 조회(*메인 기능)
 router.get("/EliteSeller", async function (req, res) {
-  let result = [];
-  let orderNum = [];
-  let list = [];
-  let temp;
-  //이벤트 쿠폰 보유자 찾기
-  const userNums = await bookservice.getEliteUserNum();
-  for (let i = 0; i < userNums.length; i++) {
-    list.push(userNums[i].user_user_num);
-  }
-  // 이벤틑 쿠폰 보유자들의 주문 번호 찾기
-  for (let i = 0; i < list.length; i++) {
-    temp = await bookservice.getEliteOrderNum(userNums[i].user_user_num);
-    if (temp != null) {
-      orderNum.push(temp);
-    }
-  }
-  let bookorderNum = await bookservice.getEliteSeller(orderNum[i].order_num);
-  console.log(bookorderNum);
-  result.push(await bookservice.getEliteSeller(orderNum[i].order_num));
-
+  const result = await bookservice.getEliteSeller();
+  console.log(result);
   return res.render("book/eliteSeller", {
     result: result,
   });
