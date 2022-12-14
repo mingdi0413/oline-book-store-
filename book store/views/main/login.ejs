@@ -2,31 +2,35 @@
 <html lang="ko">
   <head>
     <title>도서 판매 프로그램</title>
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/login.css" rel="stylesheet" type="text/css">
   </head>
 
   <body>
     <section id="login-form">
-      <form method="post" action="login">
-        <h2>로그인</h2>
+      <h1>DSU 서점</h1>
+      <form method="post" action="login" class="login-wrap">
+        <div class="login-tit">
+          <h2>로그인</h2>
+        </div>
         <div class="login_id">
-          <h4>ID</h4>
+          <!-- <h4>ID</h4> -->
           <input type="text" name="id" id="id" placeholder="ID" />
         </div>
         <div class="login_pw">
-          <h4>Password</h4>
+          <!-- <h4>Password</h4> -->
           <input type="password" name="pw" id="pw" placeholder="Password" />
         </div>
-
-        <input type="submit" value="로그인" />
-      </form>
-      <article id="btns">
-        <input type="button" value="이전 페이지" onClick="history.go(-1)" />
+        <div class="logbtn">
+        <input type="submit" value="로그인" class="login-btn"/>
         <input
-          type="button"
-          value="회원 가입"
-          onClick="location.href='sign-up'"
-        />
-      </article>
+            type="button"
+            value="회원 가입"
+            onClick="location.href='sign-up'" class="sign-up"/>
+
+        </div>
+      </form>
+      
     </section>
   </body>
 </html>
