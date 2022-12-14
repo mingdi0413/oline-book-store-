@@ -1,0 +1,85 @@
+#login-form {
+    width: 1200px;
+    margin: 200px auto;
+}
+
+#login-form h1 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.login-wrap {
+    width: 460px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: 1px solid#ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.login-tit {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.login-tit h2 {
+    font-size: 20px;
+}
+
+.login_id {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 80%;
+    height: 50px;
+    border:1px solid #ccc;
+}
+
+.login_id  input {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.login_pw {
+    margin: 0 auto;
+    width: 80%;
+    height: 50px;
+    margin-bottom: 20px;
+    border:1px solid #ccc;
+}
+
+.login_pw input {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.logbtn {
+    width: 250px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+}
+
+.login-btn {
+    width: 100px;
+    float: left;
+    outline: none;
+    border: 1px solid #ccc;
+    background-color: transparent;
+}
+
+.sign-up {
+    width: 100px;
+    float: right;
+    outline: none;
+    border: 1px solid #ccc;
+    background-color: transparent;
+}
