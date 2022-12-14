@@ -340,6 +340,21 @@ module.exports = {
       throw error;
     }
   },
+  // 실시간 이벤트 게시글 순위 불러오기
+  getEventPostRank: async () => {
+    try {
+      const conn = await pool.getConnection();
+      const query = `
+      SELECT title FROM post WHERE event_num is not NULL order by recommended desc limit 5;
+      `;
+      const [result] = await conn.query(query);
+      conn.release();
+      return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
 
   // 게시글 정보 불러오기
   getPostDetail: async (postTitle) => {
@@ -357,7 +372,6 @@ module.exports = {
       throw error;
     }
   },
-
   // userNum으로 게시글 작성자 가져오기
   getPostOwner: async (userNum) => {
     try {

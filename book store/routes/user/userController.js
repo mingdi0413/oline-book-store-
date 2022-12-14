@@ -7,6 +7,7 @@ const orderService = require("../order/orderService");
 const couponservice = require("../coupon/couponservice");
 const multer = require("multer");
 const { application } = require("express");
+const bookService = require("../book/bookService");
 const upload = multer({ dest: "./img" });
 router.use("/image", express.static("./img"));
 //회원가입 페이지
@@ -120,10 +121,12 @@ router.get("/community", async function (req, res) {
   var moment = require("moment");
   const board = await userService.getAllBoard();
   const result = await userService.getAllPost();
+  const rank = await userService.getEventPostRank();
   return res.render("post/community", {
     momment: moment,
     is_logined,
     board: board,
+    rank: rank,
     result: result.map((item) => {
       return { ...item, createdAt: dateFormat(item.createdAt) };
     }),
