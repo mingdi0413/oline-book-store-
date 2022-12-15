@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="head_bottom">
-            <div class="logo"><h1>DSU 서점</h1></div>
+            <div class="logo"><a href="/">DSU 서점</a></div>
             <div class="search">
                 <form action="/book/book-search" method="post" class="search_in">
                     <!-- <label>도서 검색</label> -->
@@ -44,11 +44,17 @@
     </div>
         <nav class="nav">
             <ul>
-                <li><button>커뮤니티</button></li>
-                <li><button>베스트 도서</button></li>
-                <li><button>전체도서</button></li>
-                <li><button>공지사항</button></li>
-                <li><button>이벤트</button></li>
+              <li><button type="button" onclick="location.href='/book/bestSeller'">
+                베스트셀러
+              </button></li>
+              <li><button type="button" onclick="location.href='/book/eliteSeller'">
+                ElitePick
+              </button></li>
+              <li> <button type="button" onclick="location.href='/user/community'">
+                커뮤니티
+              </button></li>
+              <li><button type="button" onclick="location.href='/book/bookList'">도서 목록</button></li>
+              <li><button>이벤트</button></li>
             </ul>
         </nav>
     <div class="board_wrap">

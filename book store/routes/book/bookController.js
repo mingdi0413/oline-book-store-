@@ -34,6 +34,7 @@ router.post("/book-search", async function (req, res) {
     "SELECT * FROM book WHERE book_name LIKE '%" + search_title + "%'"
   );
   return res.render("book/book-search", {
+    search_title:search_title,
     is_logined,
     result: result,
   });

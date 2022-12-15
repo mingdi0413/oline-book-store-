@@ -1,0 +1,33 @@
+/* 컨텐츠 */
+
+#login-form {
+    margin: 100px auto;
+    width: 1000px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 30px;
+    margin: 100px 0 10px 0;
+}
+
+
+#btns {
+  width: 100%;
+  margin: 100px auto;
+  text-align: center;
+  padding: 50px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+
+}
+
+button {
+  width: 20%;
+  outline: none;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  margin: 8px;
+  padding: 4px;
+}
+

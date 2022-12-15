@@ -3,7 +3,7 @@
   <head>
     <title>도서 판매 프로그램</title>
     <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
-    <link href="/static/css/login.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/sign-up.css" rel="stylesheet" type="text/css">
   </head>
 
   <body>
@@ -16,15 +16,15 @@
       </h2>
       <form method="post" action="sign-up" class="sign-up-wrap">
         <table>
-          <label>이름</label>
+          <!-- <label>이름</label> -->
           <input
             type="text"
-            class="input"
+            class="username-input"
             placeholder="이름"
             id="user_name"
             name="user_name"
           />
-          <label>아이디</label>
+          <!-- <label>아이디</label> -->
           <input
             type="text"
             class="id-input"
@@ -32,7 +32,7 @@
             id="user_id"
             name="user_id"
           />
-          <label>비밀번호</label>
+          <!-- <label>비밀번호</label> -->
           <input
             type="password"
             class="pw-input"
@@ -40,7 +40,7 @@
             id="user_password"
             name="user_password"
           />
-          <label>전화번호</label>
+          <!-- <label>전화번호</label> -->
           <input
             type="text"
             class="tell-input"
@@ -49,12 +49,9 @@
             name="user_phone"
           />
         </table>
-        <input type="submit" value="회원가입" />
+        <input type="submit" value="회원가입"  class="sign-btn"/>
       </form>
 
-      <article id="btns">
-        <input type="button" value="이전 페이지" onClick="history.go(-1)" />
-      </article>
     </section>
   </body>
 </html>

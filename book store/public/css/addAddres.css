@@ -1,0 +1,69 @@
+/* 컨텐츠 */
+
+.add-form {
+    margin: 100px auto;
+    width: 1000px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 30px;
+    margin: 100px 0 10px 0;
+}
+
+.add-table {
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+   
+}
+
+.zip_code-input {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 60%;
+    height: 50px;
+    border-radius: 10px;
+    border:1px solid #ccc;
+}
+
+.login_id  input {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.default_address-input {
+    margin: 0 auto;
+    width: 60%;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border:1px solid #ccc;
+}
+
+.login_pw input {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.detail_address-input {
+    margin: 0 auto;
+    width: 60%;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border:1px solid #ccc;
+}
+
+
+.addBtn {
+  outline: none;
+  width: 100px;
+  padding: 4px;
+  margin-top: 20px;
+  border: 1px solid#ccc;
+  border-radius: 5px;
+  background-color: transparent;
+}

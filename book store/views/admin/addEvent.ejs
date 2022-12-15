@@ -2,14 +2,16 @@
 <html lang="ko">
   <head>
     <title>도서 판매 프로그램</title>
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/addEvent.css" rel="stylesheet" type="text/css">
   </head>
 
   <body>
     <section id="addEvent-form">
       <h1>이벤트 추가</h1>
-      <form method="post" action="./addEvent">
+      <form method="post" action="./addEvent" class="event-table">
         <table>
-          <label>이벤트 이름</label>
+          <!-- <label>이벤트 이름</label> -->
           <input
             type="text"
             class="input"
@@ -17,7 +19,7 @@
             id="name"
             name="name"
           />
-          <label>이벤트 내용</label>
+          <!-- <label>이벤트 내용</label> -->
           <input
             type="text"
             class="input"
@@ -25,7 +27,7 @@
             id="content"
             name="content"
           />
-          <label>시작일</label>
+          <!-- <label>시작일</label> -->
           <input
             type="text"
             class="input"
@@ -35,7 +37,7 @@
           />
           
         </table>
-        <input type="submit" value="이벤트 등록" />
+        <input type="submit" value="이벤트 등록" class="eventBtn" />
       </form>
       
 </html>

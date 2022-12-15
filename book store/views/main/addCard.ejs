@@ -2,19 +2,17 @@
 <html lang="ko">
   <head>
     <title>도서 판매 프로그램</title>
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/addCard.css" rel="stylesheet" type="text/css">
   </head>
-
   <body>
     <section id="add-card-form">
-      <h1>
-        <div style="text-align: center">Oline Book Store</div>
-      </h1>
       <h2>
-        <div style="text-align: center">카드등록 페이지</div>
+        <div style="text-align: center">카드등록</div>
       </h2>
-      <form method="post" action="add-card">
+      <form method="post" action="add-card" class="add-card">
         <table>
-          <label>카드 유효기간</label>
+          <!-- <label>카드 유효기간</label> -->
           <input
             type="text"
             class="input"
@@ -22,7 +20,7 @@
             id="card_valid_date"
             name="card_valid_date"
           />
-          <label>카드 종류</label>
+          <!-- <label>카드 종류</label> -->
           <input
             type="text"
             class="input"
@@ -30,7 +28,7 @@
             id="card_type"
             name="card_type"
           />
-          <label>카드번호</label>
+          <!-- <label>카드번호</label> -->
           <input
             type="text"
             class="input"
@@ -39,7 +37,7 @@
             name="card_id"
           />
         </table>
-        <input type="submit" value="등록하기" />
+        <input type="submit" value="등록하기" class="cardbtn" />
       </form>
     </section>
   </body>

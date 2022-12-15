@@ -56,6 +56,7 @@ router.get("/add-address", async function (req, res) {
 
 //카드 등록 post
 router.post("/add-address", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
   const userNum = req.session.user_num;
   try {
     if (req.body) {

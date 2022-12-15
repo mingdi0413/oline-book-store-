@@ -1,0 +1,40 @@
+/* 컨텐츠 */
+
+.add-card-form {
+    margin: 100px auto;
+    width: 1200px;
+    text-align: center;
+   
+}
+
+h2 {
+    font-size: 30px;
+    margin: 100px 0 10px 0;
+}
+
+.add-card {
+    width: 1000px;
+    margin: 50px auto;
+    position: relative;
+    text-align: center;
+   
+}
+
+input {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 50%;
+    height: 50px;
+    border-radius: 10px;
+    border:1px solid #ccc;
+}
+
+.cardbtn {
+  outline: none;
+  width: 100px;
+  padding: 4px;
+  margin-top: 20px;
+  border: 1px solid#ccc;
+  border-radius: 5px;
+  background-color: transparent;
+}
