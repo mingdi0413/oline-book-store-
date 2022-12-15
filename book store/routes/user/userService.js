@@ -345,7 +345,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query = `
-      SELECT title FROM post WHERE event_num is not NULL order by recommended desc limit 5;
+      SELECT title FROM post WHERE event_num is not NULL order by recommended desc limit 10;
       `;
       const [result] = await conn.query(query);
       conn.release();

@@ -1,0 +1,55 @@
+#addorder-form {
+    margin: 100px auto;
+    width: 1000px;
+}
+
+#addorder-form h1 {
+    text-align: center;
+    font-size: 30px;
+}
+
+.order-wrap {
+    margin: 100px auto;
+    width: 800px;
+    border: 1px solid #333;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+label {
+    font-size: 25px;
+    position: relative;
+    top: 60px;
+    left: 30px;
+}
+
+.orderBtn {
+    outline: none;
+    width: 100px;
+    padding: 4px;
+    margin-top: 20px;
+    border: 1px solid#ccc;
+    border-radius: 5px;
+    background-color: transparent;
+    margin: 30px auto;
+}
+
+input { 
+    margin: 20px 300px;
+    width: 50%;
+    height: 50px;
+    outline: none;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+select {
+    margin: 20px 300px;
+    width: 50%;
+    height: 50px;
+    outline: none;
+    border-radius: 10px;
+    background-color: transparent;
+}

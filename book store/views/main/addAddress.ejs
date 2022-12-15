@@ -2,44 +2,42 @@
 <html lang="ko">
   <head>
     <title>도서 판매 프로그램</title>
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/addAddres.css" rel="stylesheet" type="text/css">
   </head>
-
   <body>
-    <section id="add-address-form">
-      <h1>
-        <div style="text-align: center">Oline Book Store</div>
-      </h1>
+    
       <h2>
-        <div style="text-align: center">주소등록 페이지</div>
+        <div style="text-align: center">주소등록</div>
       </h2>
-      <form method="post" action="add-address">
-        <table>
-          <label>우편번호</label>
+      <form method="post" action="add-address" class="add-form">
+        <table class="add-table">
+          <!-- <label>우편번호</label> -->
           <input
             type="text"
-            class="input"
+            class="zip_code-input"
             placeholder="우편번호"
             id="zip_code"
             name="zip_code"
           />
-          <label>기본주소</label>
+          <!-- <label>기본주소</label> -->
           <input
             type="text"
-            class="input"
+            class="default_address-input"
             placeholder="구 까지만 입력하세요"
             id="default_address"
             name="default_address"
           />
-          <label>상세주소</label>
+          <!-- <label>상세주소</label> -->
           <input
             type="text"
-            class="input"
+            class="detail_address-input"
             placeholder="상세주소"
             id="detail_address"
             name="detail_address"
           />
         </table>
-        <input type="submit" value="등록하기" />
+        <input type="submit" value="등록하기"  class="addBtn"/>
       </form>
     </section>
   </body>

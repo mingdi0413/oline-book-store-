@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
+    <link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="/static/css/addorder.css" rel="stylesheet" type="text/css">
     <title>도서 판매 프로그램</title>
   </head>
 
   <body>
     <section id="addorder-form">
       <h1>주문하기</h1>
-      <form method="post" action="./order">
+      <form method="post" action="./order" class="order-wrap">
         <table>
           <label>우편번호</label>
           <select name="order_zip_code">
@@ -38,7 +40,7 @@
           </select>
           
         </table>
-        <input type="submit" value="주문하기" />
+        <input type="submit" value="주문하기"  class="orderBtn"/>
       </form>
        
 </html>

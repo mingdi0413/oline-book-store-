@@ -34,6 +34,7 @@ router.post("/book-search", async function (req, res) {
     "SELECT * FROM book WHERE book_name LIKE '%" + search_title + "%'"
   );
   return res.render("book/book-search", {
+    search_title:search_title,
     is_logined,
     result: result,
   });
@@ -74,20 +75,24 @@ router.get("/bookList", async function (req, res) {
 });
 //이벤트 당첨자 주문목록 조회(*메인 기능)
 router.get("/EliteSeller", async function (req, res) {
+  const is_logined = req.session.user_num === undefined ? false : true;
   const result = await bookservice.getEliteSeller();
   console.log(result);
   return res.render("book/eliteSeller", {
+    is_logined,
     result: result,
   });
 });
 //이벤트 당첨자 쿠폰 사용 주문목록 조회(*메인 기능)
 router.get("/eventCouponSeller", async function (req, res) {
   const bookOrder = await bookservice.getEliteCouponSeller();
+  const is_logined = req.session.user_num === undefined ? false : true;
   let result = [];
   for (let i = 0; i < bookOrder.length; i++) {
     result.push(await bookservice.getBookForNum(bookOrder[i].Book_book_num));
   }
   return res.render("book/eliteSeller", {
+    is_logined,
     result: result,
   });
 });

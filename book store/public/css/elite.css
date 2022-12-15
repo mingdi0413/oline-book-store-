@@ -147,7 +147,6 @@
   
   .contents2 {
 	width: 100%;
-	margin: 50px auto;
 	
   }
   
@@ -164,9 +163,8 @@
   }
   
   .contents2 ul {
-	width: 1500px;
-	margin: 0 auto;
-	background-color: rgb(145, 231, 231);
+	width: 100%;
+	background-color: aqua;
   }
   
   .contents2 ul li {
