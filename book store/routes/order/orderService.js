@@ -211,7 +211,7 @@ module.exports = {
     }
   },
   // 주문하기(쿠폰존재)
-  insertOrder2: async (orderInfo, userNum) => {
+  insertOrder2: async (orderInfo, userNum, addressInfo, cardInfo) => {
     try {
       const {} = orderInfo;
       const conn = await pool.getConnection();
@@ -226,28 +226,29 @@ module.exports = {
                 order_card_type,
                 order_total,
                 user_user_num,
-                minusPoint,
+                minusPoint,  
                 own_coupon_num
               ) values(
                 NOW(),
                 ?,
                 ?,
                 ?,
-                NOW(),
+                ?,
                 ?,
                 ?,
                 0,
                 ?,
-                ?,
+                ?,    
                 ?
             )
             `;
       const [{ insertId: result }] = await conn.query(query, [
-        orderInfo.order_zip_code,
-        orderInfo.order_default_address,
-        orderInfo.order_detail_address,
-        orderInfo.order_card_num,
-        orderInfo.order_card_type,
+        addressInfo.zip_code,
+        addressInfo.default_address,
+        addressInfo.detail_address,
+        cardInfo.card_valid_date,
+        cardInfo.card_id,
+        cardInfo.card_type,
         userNum,
         orderInfo.minusPoint,
         orderInfo.own_coupon_num,

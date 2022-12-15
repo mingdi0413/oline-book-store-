@@ -140,7 +140,7 @@ module.exports = {
     try {
       const conn = await pool.getConnection();
       const query =
-        "select * from book_order where order_order_num in (select order_num from orders where own_coupon_num in(select num from own_coupon where coupon_num=1));";
+        "select * from book where book_num in (select book_book_num from book_order where order_order_num in (select order_num from orders where own_coupon_num in(select num from own_coupon where coupon_num=1)));";
       const [result] = await conn.query(query);
       conn.release();
       return result;

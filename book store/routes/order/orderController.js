@@ -6,10 +6,10 @@ const userService = require("../user/userService");
 const couponservice = require("../coupon/couponservice");
 var router = express.Router();
 
-const dateFormat = day => {
+const dateFormat = (day) => {
   const str = new Date(day);
-  return [str.getFullYear() ,str.getMonth() , str.getDate()].join("-");
-}
+  return [str.getFullYear(), str.getMonth(), str.getDate()].join("-");
+};
 
 //주문 정보 입력 페이지로이동
 router.post("/addorder", async function (req, res) {
@@ -29,28 +29,29 @@ router.post("/order", async function (req, res) {
   const userNum = req.session.user_num;
   const orderInfo = req.body;
   const couponNum = req.body.own_coupon_num;
+  console.log(orderInfo);
   const addressInfo = await orderService.getAddressDetail(
     orderInfo.order_zip_code,
     userNum
   );
   const cardInfo = await orderService.getCardPick(userNum, orderInfo.card_id);
-  console.log(cardInfo);
   try {
     if (userNum) {
       const cartBooks = await cartService.getCartBook(req.session.user_num); //책 리스트 전달
-      const order_num = await orderService.insertOrder(
-        orderInfo,
-        userNum,
-        addressInfo,
-        cardInfo
-      );
-      let order_total = 0;
-      for (let index = 0; index < cartBooks.length; index++) {
-        order_total += cartBooks[index].book_price;
-        await orderService.insertBookOrder(order_num, cartBooks[index]);
-      }
+
       //쿠폰 있을경우
       if (couponNum != 0) {
+        const order_num = await orderService.insertOrder2(
+          orderInfo,
+          userNum,
+          addressInfo,
+          cardInfo
+        );
+        let order_total = 0;
+        for (let index = 0; index < cartBooks.length; index++) {
+          order_total += cartBooks[index].book_price;
+          await orderService.insertBookOrder(order_num, cartBooks[index]);
+        }
         const [couponId] = await couponservice.getCouponId(couponNum);
         await orderService.useCoupon(userNum, couponId.id);
         let [minus_total_coupon] = await couponservice.getCouponDiscount(
@@ -61,6 +62,18 @@ router.post("/order", async function (req, res) {
       }
       //쿠폰없을 경우
       else {
+        const order_num = await orderService.insertOrder(
+          orderInfo,
+          userNum,
+          addressInfo,
+          cardInfo
+        );
+        let order_total = 0;
+        for (let index = 0; index < cartBooks.length; index++) {
+          order_total += cartBooks[index].book_price;
+          await orderService.insertBookOrder(order_num, cartBooks[index]);
+        }
+
         await orderService.plusOrder(order_total, order_num);
       }
       await cartService.deleteUserBook(req.session.user_num);
@@ -82,9 +95,8 @@ router.get("/order_detail", async function (req, res) {
 
   return res.render("order/order_detail", {
     is_logined,
-    result: result.map(item => {
-      
-      return ({...item,order_date : dateFormat(item.order_date)})
+    result: result.map((item) => {
+      return { ...item, order_date: dateFormat(item.order_date) };
     }),
   });
 });
@@ -101,8 +113,8 @@ router.get("/order_list", async function (req, res) {
   }
   return res.render("order/order_list", {
     is_logined,
-    result: result.map(item => {
-      return ({...item,order_date : dateFormat(item.order_date)})
+    result: result.map((item) => {
+      return { ...item, order_date: dateFormat(item.order_date) };
     }),
   });
 });
